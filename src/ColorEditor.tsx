@@ -41,15 +41,15 @@ export default function ColorEditor(props: ColorEditorProps) {
         setColorValueList(tmpList);
 
         // 调试输出
-        for(let i = 0; i <= 6; i++){
-            console.log("current button: " + currentChosenButtonIndex + "-----------------");
-            console.log(colorValueListBak[i] + " ");
-            console.log("----------------------------------------------------");
-        }
+        // for(let i = 0; i <= 6; i++){
+        //     console.log("current button: " + currentChosenButtonIndex + "-----------------");
+        //     console.log(colorValueListBak[i] + " ");
+        //     console.log("----------------------------------------------------");
+        // }
 
         // 按钮颜色改变
         let colorHexValue: string = "#" + colorValueListBak[4].toString(16) + colorValueListBak[5].toString(16) + colorValueListBak[6].toString(16);
-        console.log("----------hexValue: " + colorHexValue);
+        // console.log("----------hexValue: " + colorHexValue);
         let colorButton = document.getElementById("button"+currentChosenButtonIndex);
         // @ts-ignore
         colorButton.style.backgroundColor = colorHexValue;
@@ -60,7 +60,7 @@ export default function ColorEditor(props: ColorEditorProps) {
     }
     // HSV => RGB
     const HSV2RGB = (colorValueListBak: Array<number>):Array<number> => {
-        console.log("-------------------------in HSV 2 RGB----------------------------");
+        // console.log("-------------------------in HSV 2 RGB----------------------------");
         let R: number = colorValueListBak[4]/255, G: number = colorValueListBak[5]/255, B: number = colorValueListBak[6]/255;
         let H: number = colorValueListBak[0], S: number = colorValueListBak[1], V: number = colorValueListBak[2];
         let h: number = Math.floor(H / 60);
@@ -92,14 +92,14 @@ export default function ColorEditor(props: ColorEditorProps) {
         colorValueListBak[5] = parseFloat(G.toFixed(0));
         colorValueListBak[6] = parseFloat(B.toFixed(0));
         // 调试输出
-        for(let i = 0; i <= 6; i++){
-            console.log(colorValueListBak[i] + " ");
-        }
+        // for(let i = 0; i <= 6; i++){
+        //     console.log(colorValueListBak[i] + " ");
+        // }
         return colorValueListBak;
     }
     // RGB => HSV
     const RGB2HSV = (colorValueListBak: Array<number>):Array<number> => {
-        console.log("-------------------------in RGB 2 HSV----------------------------");
+        // console.log("-------------------------in RGB 2 HSV----------------------------");
         let H: number = colorValueListBak[0], S: number, V: number;
         let R: number = colorValueListBak[4]/255, G: number = colorValueListBak[5]/255, B: number = colorValueListBak[6]/255;
         let colorMax = getMax(R, G, B), colorMin = getMin(R, G, B), delta = colorMax - colorMin;
@@ -129,9 +129,9 @@ export default function ColorEditor(props: ColorEditorProps) {
         colorValueListBak[1] = parseFloat(S.toFixed(2));
         colorValueListBak[2] = parseFloat(V.toFixed(2));
         // 调试输出
-        for(let i = 0; i <= 6; i++){
-            console.log(colorValueListBak[i] + " ");
-        }
+        // for(let i = 0; i <= 6; i++){
+        //     console.log(colorValueListBak[i] + " ");
+        // }
         return colorValueListBak;
     }
     // 获取三个数的最大值
@@ -154,17 +154,17 @@ export default function ColorEditor(props: ColorEditorProps) {
     }
     // 监听获取输入的线稿名
     const nameOfTheSketchOnChange = (event: any) => {
-        console.log("------------changing sketch name----------------");
+        // console.log("------------changing sketch name----------------");
         inputNameOfTheSketch.current = event.target.value;
     }
     // 监听获取输入的线稿描述
     const descriptionOfTheSketchOnChange = (event: any) => {
-        console.log("------------changing description----------------");
+        // console.log("------------changing description----------------");
         inputDescriptionOfTheSketch.current = event.target.value;
     }
     // 监听颜色按钮点击事件
     const colorButtonHandleClick = (id: number) => {
-        console.log("current button: " + id);
+        // console.log("current button: " + id);
         setCurrentChosenButtonIndex(id);
         // 选中高亮
         for(let i = 0; i < sketchJson.sketch_list[currentChosenSketchIndex].colors; i++){
@@ -180,9 +180,9 @@ export default function ColorEditor(props: ColorEditorProps) {
     }
     // 监听提交按钮点击事件
     const submitButtonHandleClick = () => {
-        console.log("id: " + sketchJson.sketch_list[currentChosenSketchIndex].id);
-        console.log("线稿名: " + inputNameOfTheSketch.current);
-        console.log("线稿描述: " + inputDescriptionOfTheSketch.current);
+        // console.log("id: " + sketchJson.sketch_list[currentChosenSketchIndex].id);
+        // console.log("线稿名: " + inputNameOfTheSketch.current);
+        // console.log("线稿描述: " + inputDescriptionOfTheSketch.current);
         if(inputNameOfTheSketch.current === ""){
             alert("请输入线稿名")
         }
@@ -204,12 +204,12 @@ export default function ColorEditor(props: ColorEditorProps) {
                 list.push(tmpList[i][2]);
                 colorValueListOfSketch.push(list);
             }
-            for (let i = 0; i < tmpList.length; i++){
-                console.log("色块: " + i);
-                for(let j = 0; j < 7; j++){
-                    console.log(colorValueListOfSketch[i][j]);
-                }
-            }
+            // for (let i = 0; i < tmpList.length; i++){
+            //     // console.log("色块: " + i);
+            //     for(let j = 0; j < 7; j++){
+            //         console.log(colorValueListOfSketch[i][j]);
+            //     }
+            // }
             props.onSubmit(sketchJson.sketch_list[currentChosenSketchIndex].id, inputNameOfTheSketch.current, inputDescriptionOfTheSketch.current, colorValueListOfSketch);
         }
     }
@@ -238,15 +238,42 @@ export default function ColorEditor(props: ColorEditorProps) {
         }
         colorValueListInit.push(colorSliderValueListInit);
     }
-    // 初始化颜色按钮(default = 第 0 个线稿的第 0 个按钮)
+
     let colorButtonListInit = [];
-    for(let i = 0; i < sketchJson.sketch_list[0].colors; i++){
-        colorButtonListInit.push(
-            <ColorButton id={i} onClick={colorButtonHandleClick}/>
-        )
+// 如果是历史记录的，就更新对应 线稿 的二维数组
+    if(props.isHistory){
+        //
+        console.log("Enter")
+        // 颜色转换 [R, G, B, A, H, S, V] => [H, S, V, A, R, G, B]
+        let id = 0;
+        for(let i = 0; i < sketchJson.sketch_list.length; i++){
+            if(props.sketchId === sketchJson.sketch_list[i].id) {
+                id = i;
+                console.log(i)
+            }
+        }
+        for(let i = 0; i < colorValueListInit[id].length; i++){ // 遍历每个色块
+            colorValueListInit[id][i][0] = props.colorValueArr[i][4];
+            colorValueListInit[id][i][1] = props.colorValueArr[i][5];
+            colorValueListInit[id][i][2] = props.colorValueArr[i][6];
+            colorValueListInit[id][i][4] = props.colorValueArr[i][0];
+            colorValueListInit[id][i][5] = props.colorValueArr[i][1];
+            colorValueListInit[id][i][6] = props.colorValueArr[i][2];
+        }
+        // 初始化颜色按钮(default = 历史记录传来的)
+        for(let i = 0; i < colorValueListInit[id].length; i++){
+            colorButtonListInit.push(
+                <ColorButton id={i} onClick={colorButtonHandleClick}/>
+            )
+        }
     }
-    if(props.isHistory){ // 如果是历史记录的，就更新对应 线稿 的二维数组
-        colorValueListInit[props.sketchId] = props.colorValueArr;
+    else {
+        // 初始化颜色按钮(default = 第 0 个线稿的第 0 个按钮)
+        for(let i = 0; i < sketchJson.sketch_list[0].colors; i++){
+            colorButtonListInit.push(
+                <ColorButton id={i} onClick={colorButtonHandleClick}/>
+            )
+        }
     }
     // 组件挂载后初始化按钮颜色(利用 sketchList 里的值)
     useEffect(() => {

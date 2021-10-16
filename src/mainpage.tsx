@@ -187,6 +187,7 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
     const [recodrList,setRecordList]=useState<ReactElement>(<div/>);
     const [sketchList,setSketchList]=useState<string>();//线稿 的 list json
     const userScheme = useRef<string>("");
+    let counter:number=0;
 
     let sortType:string="submission_time";
     let tempList:string='{\n' +
@@ -296,12 +297,19 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
                 if(p[i].id==id){
                     let sketch_id=p[i].sketch_id;
                     let color=p[i].colors;
+                    color=eval(color);
+                    console.log(color[1][1]);
+                    console.log(color);
+                    console.log(sketch_id);
+                    counter++;
+                    console.log(counter);
                     setLogin(
                         <Layout>
                             <Header style={{backgroundColor:"lightblue"}}>
                                 <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role}/>
                             </Header>
                             <Content style={{ padding: '0 50px' }}>
+                                <p>{counter}</p>
                                 <ColorEditor sketchStr={JSON.stringify(sketchJson.current)} onSubmit={submitRecord} isHistory={true} colorValueArr={color} sketchId={sketch_id}/>
                             </Content>
                         </Layout>
@@ -371,6 +379,7 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
                                 <Layout>
                                     <Content style={{margin:"50px auto"}}>
                                         <HistoryList  sort={changeSort} getString={JSON.stringify(userScheme.current)} show_select={true} approve={approveOpeation} delete={deleteRecord} explore={exploreOpeation}/>
+
                                     </Content>
                                     <BottomBar/>
                                 </Layout>
@@ -389,6 +398,7 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
                                         <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role}/>
                                     </Header>
                                     <Content style={{ padding: '0 50px' }}>
+                                        <p>???</p>
                                         <ColorEditor sketchStr={JSON.stringify(sketchJson.current)} onSubmit={submitRecord} isHistory={false} colorValueArr={[]} sketchId={0}/>
                                     </Content>
                                 </Layout>
