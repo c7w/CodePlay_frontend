@@ -1,0 +1,86 @@
+@import '~antd/dist/antd.css';
+
+.colorEditor {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.button {
+    float: right;
+}
+
+.colorToChoose {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.colorButton {
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+
+}
+
+.colorButton:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px;
+}
+
+.wrapper {
+    height: 50px;
+    width: 100px;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.colorButtonLight {
+    box-shadow: 0 0 10px;
+}
+
+.colorPicker {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.HSVColor {
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+}
+
+.RGBColor {
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+}
+
+.inputFrame {
+    padding: 20px;
+    width: 400px;
+}
+
+.sketchPreview {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sketchList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.fontSize {
+    font-size: 15px;
+}

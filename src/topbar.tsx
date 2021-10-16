@@ -18,7 +18,6 @@ interface TopBarProps{
     readonly role:string;
 }
 
-
 function LoginOut(){
     window.location.href = "./logout";
 }
@@ -77,8 +76,6 @@ const App = (props:Appprops) => {
 
 //顶栏
 class TopBar extends React.Component<TopBarProps>{
-
-
     render() {
         return(
         <Row justify="space-around" align={"middle"}>
