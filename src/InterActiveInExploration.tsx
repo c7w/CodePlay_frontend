@@ -10,12 +10,17 @@ interface InterActiveInExplorationProps{
 }
 
 const InterActiveInExploration=(props:InterActiveInExplorationProps)=>{
+    let voted:boolean=false;
 
     function like():void{
+        if(voted){
+            return;
+        }
+        voted=!voted;
         let icon=document.getElementById("heart");
         props.vote();
         if(icon){
-            icon.style.backgroundColor='red';
+            icon.style.color='red';
         }
     }
 
@@ -27,6 +32,11 @@ const InterActiveInExploration=(props:InterActiveInExplorationProps)=>{
         props.edit();
     }
 
+    let icon=document.getElementById("heart");
+    if(icon){
+        icon.style.color='black'
+    }
+
     return (
         <div>
             <Row justify="space-around" align={"middle"} style={{backgroundColor:"lightblue"}}>
@@ -36,11 +46,11 @@ const InterActiveInExploration=(props:InterActiveInExplorationProps)=>{
                 </Col>
                 <Col span={4}/>
                 <Col span={2}>
-                    <FontAwesomeIcon icon={ faPaintBrush} onClick={toNext} size={"2x"} />
+                    <FontAwesomeIcon icon={ faPaintBrush} onClick={toEdit} size={"2x"} />
                 </Col>
                 <Col span={4}/>
                 <Col span={2}>
-                    <FontAwesomeIcon icon={ faStepForward} onClick={toEdit} size={"2x"} />
+                    <FontAwesomeIcon icon={ faStepForward} onClick={toNext} size={"2x"} />
                 </Col>
                 <Col span={5}/>
             </Row>

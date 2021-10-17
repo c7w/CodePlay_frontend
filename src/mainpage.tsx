@@ -5,20 +5,22 @@ import LoginButton from "./LoginButton";
 import MD5 from "./MD5";
 import {stringify} from "querystring";
 import {ReactComponent} from "*.svg";
-import {Layout} from "antd";
+import {Layout, Row} from "antd";
 import {Content, Header} from "antd/es/layout/layout";
 import BottomBar from "./BottomBar";
-import HistoryList from "./App";
+import HistoryList from "./HistoryList";
 import {Simulate} from "react-dom/test-utils";
 import ColorEditor from "./ColorEditor";
 import { message, Button } from 'antd';
+import InterActiveInExploration from "./InterActiveInExploration";
+import Preview from "./SketchPreview";
 
 const info = (text:string) => {
     message.info(text);
 };
 
 function getSessionId():string{
-    return "GRLZouIMe3lTi08XdqnjfQJSzc1Wb6wx";//delete later
+    return "9NCcToWtip7blkwuI1VmgPGXFBQnD2v8";//delete later
     let sessionId="sessionId=";
     let cookie:string[]=document.cookie.split(';');
     for(let i=0;i<cookie.length;i++){
@@ -185,9 +187,16 @@ function getsketch():Promise<string>{
 const Mainpage = (Props:MainpageProps):ReactElement=>{
     const [login,setLogin]=useState<ReactElement>(<div/>);
     const [recodrList,setRecordList]=useState<ReactElement>(<div/>);
+    const [explorePage,setExplorePage]=useState<ReactElement>(<div/>);
     const [sketchList,setSketchList]=useState<string>();//线稿 的 list json
     const userScheme = useRef<string>("");
+    const exploreScheme=useRef<any>("");
     let counter:number=0;
+    let sort:string="submission_time";
+    let approved:boolean=false;
+    let submitedIn30s:boolean=false;
+    let currentExploreSketchId:number=0;
+    let currentRecordId:number=0;
 
     let sortType:string="submission_time";
     let tempList:string='{\n' +
@@ -204,47 +213,47 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
         '}\n';
     const sketchJson=useRef<string>(tempList);
 
-    //调试
-    function tryFunc(type:string):void {
-        console.log("enter");
-        getExploreScheme(1,type,false).then(
-            resp=>{
-                console.log(resp);
-            }
-        )
-    }
-
     //点击排序函数
     function changeSort(type:string):void{
         console.log("enter");
-        // // setLogin(<div/>);
-        // // return
-        // let s = '{"schemes":[{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrrrrrrorrrrrrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":false,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":true,"colors":[[224,0,29,0.5,90,200,100],[143,200,10,0.5,79,30,200]]}]}';
-        // console.log(userScheme)
-        // // setUserScheme('{"schemes":[{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrrrrrrorrrrrrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":false,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":true,"colors":[[224,0,29,0.5,90,200,100],[143,200,10,0.5,79,30,200]]}]}');
-        // setUserScheme(s);
-        // console.log(userScheme)
-        // return
-        getUserScheme(student_id,type).then(
-            resp=>{
-                console.log("???");
-                sortType=type;
-                console.log(resp);
-                //setUserScheme(resp);
-                userScheme.current = (resp);
-                console.debug(userScheme.current);
-                setRecordList(
-                    <Layout>
-                        <Content style={{margin:"50px auto"}}>
-                            <HistoryList sort={changeSort} getString={JSON.stringify(userScheme.current)} show_select={true} approve={approveOpeation} delete={deleteRecord} explore={exploreOpeation}/>
-                        </Content>
-                        <BottomBar/>
-                    </Layout>
-                )
-                //setUserScheme('{"schemes":[{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrrrrrrorrrrrrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":false,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":true,"colors":[[224,0,29,0.5,90,200,100],[143,200,10,0.5,79,30,200]]}]}'
-            // )
-            }
-        )
+
+        if(isDesigner){
+            getExploreScheme(0,type,false).then(
+                resp=>{
+                    sortType=type;
+                    userScheme.current = (resp);
+                    setRecordList(
+                        <Layout>
+                            <Content style={{margin:"50px auto"}}>
+                                <HistoryList sort={changeSort} getString={JSON.stringify(userScheme.current)} show_select={isDesigner} approve={approveOpeation} delete={deleteRecord} explore={exploreOpeation} disapprove={disapproveOpeation}/>
+                            </Content>
+                            <BottomBar/>
+                        </Layout>
+                    )
+                }
+            )
+        }else {
+            getUserScheme(student_id,type).then(
+                resp=>{
+                    console.log("???");
+                    sortType=type;
+                    console.log(resp);
+                    console.log(isDesigner);
+                    //setUserScheme(resp);
+                    userScheme.current = (resp);
+                    console.debug(userScheme.current);
+                    setRecordList(
+                        <Layout>
+                            <Content style={{margin:"50px auto"}}>
+                                <HistoryList sort={changeSort} getString={JSON.stringify(userScheme.current)} show_select={isDesigner} approve={approveOpeation} delete={deleteRecord} explore={exploreOpeation} disapprove={disapproveOpeation}/>
+                            </Content>
+                            <BottomBar/>
+                        </Layout>
+                    )
+                    // )
+                }
+            )
+        }
     }
 
     //删除按钮点击处理
@@ -279,15 +288,24 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
 
     //提交操作
     function submitRecord(sketch_id:number,name:string,discription:string,color_List:number[][]):void{
-        changeUserScheme("create",0,color_List,name,discription,student_id,sketch_id).then(
-            resp=>{
-                message.info("提交成功")
-                changeSort(sortType);
-            }
-        )
+        if(submitedIn30s){
+            message.info("您的提交过于频繁，请稍后！");
+        }else{
+            changeUserScheme("create",0,color_List,name,discription,student_id,sketch_id).then(
+                resp=>{
+                    message.info("提交成功")
+                    changeSort(sortType);
+                    submitedIn30s=true;
+                    setTimeout(()=>{
+                        submitedIn30s=false;
+                    },30000);
+                }
+            )
+        }
+
     }
 
-    //跳转到浏览界面
+    //点击历史记录色条跳转到浏览界面
     function exploreOpeation(id:number):void{
         let message:any=userScheme.current;
         if(message){
@@ -306,10 +324,9 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
                     setLogin(
                         <Layout>
                             <Header style={{backgroundColor:"lightblue"}}>
-                                <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role}/>
+                                <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role} cheaked={true}/>
                             </Header>
                             <Content style={{ padding: '0 50px' }}>
-                                <p>{counter}</p>
                                 <ColorEditor sketchStr={JSON.stringify(sketchJson.current)} onSubmit={submitRecord} isHistory={true} colorValueArr={color} sketchId={sketch_id}/>
                             </Content>
                         </Layout>
@@ -319,18 +336,120 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
         }
     }
 
+    //点赞
+    function vote():void{
+        changeUserScheme("vote",exploreScheme.current.schemes[0].id,[],'','','',0).then(
+            resp=>{
+                message.info("点赞成功");
+            }
+        )
+    }
+
+    //下一张
+    function next():void{
+        console.log("???");
+        refreshExplore(sort,approved);
+    }
+
+    //编辑
+    function edit():void{
+        switchChange();
+        let sketch_id=exploreScheme.current.schemes[currentRecordId].sketch_id;
+        console.log(exploreScheme.current);
+        let color=exploreScheme.current.schemes[currentRecordId].colors;
+        color=eval(color);
+        console.log(color);
+        setLogin(
+            <Layout>
+                <Header style={{backgroundColor:"lightblue"}}>
+                    <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role} cheaked={true}/>
+                </Header>
+                <Content style={{ padding: '0 50px' }}>
+                    <p>{counter}</p>
+                    <ColorEditor sketchStr={JSON.stringify(sketchJson.current)} onSubmit={submitRecord} isHistory={true} colorValueArr={color} sketchId={sketch_id}/>
+                </Content>
+            </Layout>
+        )
+    }
+
+    //浏览界面查看历史记录
+    function historyInExploration(id:number):void{
+        return;
+    }
+
+    //刷新随机浏览界面
+    function refreshExplore(sort:string,approved:boolean):void{
+        getExploreScheme(0,sort,approved).then(
+            resp=>{
+                exploreScheme.current=resp;
+                console.log(resp);
+                let sketch_id=exploreScheme.current.schemes[0].sketch_id;
+                let tem=0;
+                if(exploreScheme.current.schemes.length>1){
+                    tem=Math.floor(Math.random()*(exploreScheme.current.schemes.length-1));
+                    if(tem<exploreScheme.current.schemes.length){
+                        sketch_id=exploreScheme.current.schemes[tem].sketch_id;
+                    }
+                }
+                let temjson:any=sketchJson;
+                let svglist=temjson.current.sketch_list;
+                let svg='';
+                for(let i=0;i<svglist.length;i++){
+                    if(svglist[i].id==sketch_id){
+                        svg=svglist[i].data;
+                    }
+                }
+                currentExploreSketchId=sketch_id;
+                currentRecordId=tem;
+                setExplorePage(
+                    <Layout>
+                        <Header style={{backgroundColor:"lightblue"}}>
+                            <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role} cheaked={false}/>
+                        </Header>
+                        <Content style={{ padding: '0 50px' }}>
+                            <Row justify={"space-around"} align={"middle"}>
+                                <Preview raw_str={svg} color_arr={exploreScheme.current.schemes[tem].colors} extra_arr={""}/>
+                            </Row>
+                            <InterActiveInExploration vote={vote} next={next} edit={edit} />
+                            <div style={{height:"800px"}}/>
+                        </Content>
+                        <BottomBar/>
+                    </Layout>
+                )
+            }
+        )
+    }
+
     //切换界面 TO DO
     var isCreate:boolean=true;
     function switchChange(){
         isCreate=!isCreate;
         if(isCreate){
-            let temButton=document.getElementById("loginButton");
-            if(temButton!==null)
-                temButton.style.visibility="visible";
+            setLogin(
+                <Layout>
+                    <Header style={{backgroundColor:"lightblue"}}>
+                        <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role} cheaked={true}/>
+                    </Header>
+                    <Content style={{ padding: '0 50px' }}>
+                        <ColorEditor sketchStr={JSON.stringify(sketchJson.current)} onSubmit={submitRecord} isHistory={false} colorValueArr={[]} sketchId={0}/>
+                    </Content>
+                </Layout>
+            )
+            setRecordList(
+                <Layout>
+                    <Content style={{margin:"50px auto"}}>
+                        <HistoryList  sort={changeSort} getString={JSON.stringify(userScheme.current)} show_select={isDesigner} approve={approveOpeation} delete={deleteRecord} explore={exploreOpeation } disapprove={disapproveOpeation}/>
+                    </Content>
+                    <BottomBar/>
+                </Layout>
+            )
+            setExplorePage(<div/>)
         }else{
-            let temButton=document.getElementById("loginButton");
-            if(temButton!==null)
-                temButton.style.visibility="hidden";
+            //此处应该调用一次请求函数
+            setLogin(<div/>);
+            setRecordList(<div/>);
+            // console.log(isDesigner);
+            refreshExplore(sort,approved);
         }
     }
 
@@ -368,25 +487,48 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
                 email=json.email;
                 role=json.role;
                 isLogin=true;
+                if(role=="Designer"){
+                    isDesigner=true;
+                }
 
-                getUserScheme(student_id,"submission_time").then(
-                    resp=>{
-                        userScheme.current = (resp);
-                        console.log("userScheam");
-                        console.log(userScheme.current);
-                        if(isLogin){
-                            setRecordList(
-                                <Layout>
-                                    <Content style={{margin:"50px auto"}}>
-                                        <HistoryList  sort={changeSort} getString={JSON.stringify(userScheme.current)} show_select={true} approve={approveOpeation} delete={deleteRecord} explore={exploreOpeation}/>
 
-                                    </Content>
-                                    <BottomBar/>
-                                </Layout>
-                            )
+                if(isDesigner){
+                    getExploreScheme(0,"submission_time",false).then(
+                        resp=>{
+                            userScheme.current = (resp);
+                            console.log(userScheme.current);
+                            if(isLogin){
+                                setRecordList(
+                                    <Layout>
+                                        <Content style={{margin:"50px auto"}}>
+                                            <HistoryList  disapprove={disapproveOpeation} sort={changeSort} getString={JSON.stringify(userScheme.current)} show_select={isDesigner} approve={approveOpeation} delete={deleteRecord} explore={exploreOpeation}/>
+                                        </Content>
+                                        <BottomBar/>
+                                    </Layout>
+                                )
+                            }
                         }
-                    }
-                )
+                    )
+                }else {
+                    getUserScheme(student_id,"submission_time").then(
+                        resp=>{
+                            userScheme.current = (resp);
+                            console.log("userScheam");
+                            console.log(userScheme.current);
+                            if(isLogin){
+                                setRecordList(
+                                    <Layout>
+                                        <Content style={{margin:"50px auto"}}>
+                                            <HistoryList  disapprove={disapproveOpeation} sort={changeSort} getString={JSON.stringify(userScheme.current)} show_select={isDesigner} approve={approveOpeation} delete={deleteRecord} explore={exploreOpeation}/>
+                                        </Content>
+                                        <BottomBar/>
+                                    </Layout>
+                                )
+                            }
+                        }
+                    )
+                }
+
 
                 getsketch().then(
                     resp=>{
@@ -395,7 +537,7 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
                             setLogin(
                                 <Layout>
                                     <Header style={{backgroundColor:"lightblue"}}>
-                                        <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role}/>
+                                        <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role} cheaked={true}/>
                                     </Header>
                                     <Content style={{ padding: '0 50px' }}>
                                         <p>???</p>
@@ -415,6 +557,7 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
         <div>
             <>{login}</>
             <>{recodrList}</>
+            <>{explorePage}</>
         </div>
     );
 }

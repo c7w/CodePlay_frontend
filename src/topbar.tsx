@@ -16,6 +16,7 @@ interface TopBarProps{
     readonly stateChangeFunction:()=>void;
     readonly promptToDesigner:(value:string)=>Promise<boolean>;
     readonly role:string;
+    readonly cheaked:boolean;
 }
 
 function LoginOut(){
@@ -85,7 +86,7 @@ class TopBar extends React.Component<TopBarProps>{
             <Col span={13}>
             </Col>
             <Col span={2} style={{height:"73px"}}>
-                <Switch  checkedChildren="创作" unCheckedChildren="浏览" defaultChecked onChange={this.props.stateChangeFunction}/>
+                <Switch  checkedChildren="创作" unCheckedChildren="浏览" defaultChecked={this.props.cheaked} onChange={this.props.stateChangeFunction}/>
             </Col>
             <Col span={1.25}>
                 <App  role={this.props.role} submit={this.props.promptToDesigner} />

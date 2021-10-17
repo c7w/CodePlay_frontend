@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './HistoryList.css';
 import { Button } from 'antd';
 
 interface history_props {
@@ -41,7 +41,6 @@ class Piece extends React.Component<piece_props, piece_state> {
             let tmp_str = "rgba(" + this.props.color_str[i][0] + "," + this.props.color_str[i][1] + "," + this.props.color_str[i][2] + "," + this.props.color_str[i][3] + ")";
             color_bind.push(<div className="color" style={{backgroundColor: tmp_str, opacity: this.props.color_str[i][3]}}/>);
         }
-
         if (this.props.select) {
             return (
                 <div className={"piece"}>
@@ -61,7 +60,7 @@ class Piece extends React.Component<piece_props, piece_state> {
                 <div className={"piece"}>
                     <div className={"pic_class"}>{this.props.pic_class}</div>
                     <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>O</div>
-                    <div className={"select"} onClick={()=>{this.props.approve(this.props.id)}}>X</div>
+                    <div className={"select"} onClick={()=>{this.props.approve(this.props.id)}}></div>
                     <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
                         {color_bind}
                     </div>
@@ -82,7 +81,6 @@ class HistoryList extends React.Component<history_props, history_state> {
         let arr_left = [];
         let arr_right = [];
         let s = this.props.getString;
-        // let s = '{"schemes":[{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":false,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":true,"colors":[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]}]}'
         if (s !== "") {
             let parjson = JSON.parse(s);
             //this.setState({parjson: parjson});
@@ -91,7 +89,6 @@ class HistoryList extends React.Component<history_props, history_state> {
 
             for(let i = 0; i < left_num; i++){
                 let p = parjson.schemes[i];
-                p.colors=eval(p.colors);
                 let id = p.id;
                 let pic_class = p.sketch_id;
                 let select = this.props.show_select;
@@ -103,7 +100,6 @@ class HistoryList extends React.Component<history_props, history_state> {
                     let r = p.colors[j][0]; //取rgb值的第一个,位置待定
                     let g = p.colors[j][1];
                     let b = p.colors[j][2];
-
                     let a = p.colors[j][4];
                     let tmp = [r, g, b, a];
                     color_str.push(tmp);
@@ -125,7 +121,6 @@ class HistoryList extends React.Component<history_props, history_state> {
                     let r = p.colors[j][0]; //取rgb值的第一个,位置待定
                     let g = p.colors[j][1];
                     let b = p.colors[j][2];
-
                     let a = p.colors[j][4];
                     let tmp = [r, g, b, a];
                     color_str.push(tmp);
