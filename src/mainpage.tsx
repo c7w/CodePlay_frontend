@@ -311,16 +311,13 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
         if(message){
             let p=message.schemes;
             let num:number=p.length;
-            for(let i:number=0;i<num;i++){
+            for(let i=0;i<num;i++){
                 if(p[i].id==id){
                     let sketch_id=p[i].sketch_id;
                     let color=p[i].colors;
                     color=eval(color);
-                    console.log(color[1][1]);
                     console.log(color);
                     console.log(sketch_id);
-                    counter++;
-                    console.log(counter);
                     setLogin(
                         <Layout>
                             <Header style={{backgroundColor:"lightblue"}}>
@@ -331,7 +328,9 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
                             </Content>
                         </Layout>
                     )
+                    break;
                 }
+
             }
         }
     }
@@ -347,7 +346,6 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
 
     //下一张
     function next():void{
-        console.log("???");
         refreshExplore(sort,approved);
     }
 
@@ -359,13 +357,13 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
         let color=exploreScheme.current.schemes[currentRecordId].colors;
         color=eval(color);
         console.log(color);
+        console.log(sketch_id);
         setLogin(
             <Layout>
                 <Header style={{backgroundColor:"lightblue"}}>
                     <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role} cheaked={true}/>
                 </Header>
                 <Content style={{ padding: '0 50px' }}>
-                    <p>{counter}</p>
                     <ColorEditor sketchStr={JSON.stringify(sketchJson.current)} onSubmit={submitRecord} isHistory={true} colorValueArr={color} sketchId={sketch_id}/>
                 </Content>
             </Layout>
@@ -382,7 +380,6 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
         getExploreScheme(0,sort,approved).then(
             resp=>{
                 exploreScheme.current=resp;
-                console.log(resp);
                 let sketch_id=exploreScheme.current.schemes[0].sketch_id;
                 let tem=0;
                 if(exploreScheme.current.schemes.length>1){
@@ -416,6 +413,7 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
                         <BottomBar/>
                     </Layout>
                 )
+                message.info("新一张了QwQ");
             }
         )
     }
@@ -540,7 +538,6 @@ const Mainpage = (Props:MainpageProps):ReactElement=>{
                                         <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role} cheaked={true}/>
                                     </Header>
                                     <Content style={{ padding: '0 50px' }}>
-                                        <p>???</p>
                                         <ColorEditor sketchStr={JSON.stringify(sketchJson.current)} onSubmit={submitRecord} isHistory={false} colorValueArr={[]} sketchId={0}/>
                                     </Content>
                                 </Layout>

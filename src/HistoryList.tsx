@@ -2,7 +2,7 @@ import React from 'react';
 import './HistoryList.css';
 import { Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faCheckCircle, faTimesCircle, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 interface history_props {
     readonly sort: (type:string)=>void;
@@ -64,37 +64,81 @@ class Piece extends React.Component<piece_props, piece_state> {
             color_bind.push(<div className="color" style={{backgroundColor: tmp_str, opacity: this.props.color_str[i][3]}}/>);
         }
         if (this.props.select) {
-            if (this.props.ifhide) {
-                return (
-                    <div className={"piece"}>
-                        <div className={"pic_class"}>{this.props.pic_class}</div>
-                        <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
-                            <FontAwesomeIcon icon={faTrash} style={{color:"red"}}/>
+            if(this.props.ifapprove) {
+                if (this.props.ifhide) {
+                    return (
+                        <div className={"piece"}>
+                            <div className={"pic_class"}>{this.props.pic_class}</div>
+                            <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
+                                <FontAwesomeIcon icon={faTrash} style={{color:"red"}}/>
+                            </div>
+                            <div className={"select"} onClick={()=>{this.handler(this.state.ifapproved, this.props.id)}}>
+                                <FontAwesomeIcon icon={faCheckCircle} style={{color:"green"}}/>
+                            </div>
+                            <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
+                                {color_bind}
+                            </div>
+                            <div className="author">{this.props.author}</div>
+                            <div className="pic_name">{this.props.pic_name}</div>
                         </div>
-                        <div className={"select"} onClick={()=>{this.handler(this.state.ifapproved, this.props.id)}}>X</div>
-                        <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
-                            {color_bind}
+                    )
+                }
+                else {
+                    return (
+                        <div className={"piece"}>
+                            <div className={"pic_class"}>{this.props.pic_class}</div>
+                            <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
+                                <FontAwesomeIcon icon={faTrash}/>
+                            </div>
+                            <div className={"select"} onClick={()=>{this.handler(this.state.ifapproved, this.props.id)}}>
+                                <FontAwesomeIcon icon={faCheckCircle} style={{color:"green"}}/>
+                            </div>
+                            <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
+                                {color_bind}
+                            </div>
+                            <div className="author">{this.props.author}</div>
+                            <div className="pic_name">{this.props.pic_name}</div>
                         </div>
-                        <div className="author">{this.props.author}</div>
-                        <div className="pic_name">{this.props.pic_name}</div>
-                    </div>
-                )
+                    )
+                }
             }
             else {
-                return (
-                    <div className={"piece"}>
-                        <div className={"pic_class"}>{this.props.pic_class}</div>
-                        <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
-                            <FontAwesomeIcon icon={faTrash}/>
+                if (this.props.ifhide) {
+                    return (
+                        <div className={"piece"}>
+                            <div className={"pic_class"}>{this.props.pic_class}</div>
+                            <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
+                                <FontAwesomeIcon icon={faTrash} style={{color:"red"}}/>
+                            </div>
+                            <div className={"select"} onClick={()=>{this.handler(this.state.ifapproved, this.props.id)}}>
+                                <FontAwesomeIcon icon={faTimesCircle} style={{color:"red"}}/>
+                            </div>
+                            <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
+                                {color_bind}
+                            </div>
+                            <div className="author">{this.props.author}</div>
+                            <div className="pic_name">{this.props.pic_name}</div>
                         </div>
-                        <div className={"select"} onClick={()=>{this.handler(this.state.ifapproved, this.props.id)}}>X</div>
-                        <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
-                            {color_bind}
+                    )
+                }
+                else {
+                    return (
+                        <div className={"piece"}>
+                            <div className={"pic_class"}>{this.props.pic_class}</div>
+                            <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
+                                <FontAwesomeIcon icon={faTrash}/>
+                            </div>
+                            <div className={"select"} onClick={()=>{this.handler(this.state.ifapproved, this.props.id)}}>
+                                <FontAwesomeIcon icon={faTimesCircle} style={{color:"red"}}/>
+                            </div>
+                            <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
+                                {color_bind}
+                            </div>
+                            <div className="author">{this.props.author}</div>
+                            <div className="pic_name">{this.props.pic_name}</div>
                         </div>
-                        <div className="author">{this.props.author}</div>
-                        <div className="pic_name">{this.props.pic_name}</div>
-                    </div>
-                )
+                    )
+                }
             }
         }
         else {
@@ -139,13 +183,13 @@ class HistoryList extends React.Component<history_props, history_state> {
     render() {
         let arr_left = [];
         let arr_right = [];
-         let s = this.props.getString;
+        let s = this.props.getString;
         // let s = '{"schemes":[' +
-        //     '{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":false,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":false,"colors":"[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]"}' +
+        //     '{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":true,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":false,"colors":"[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]"}' +
         //     ',{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":false,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":true,"colors":"[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]"}' +
         //     ',{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":false,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":false,"colors":"[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]"}' +
         //     ',{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":false,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":true,"colors":"[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]"}' +
-        //     ',{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":false,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":true,"colors":"[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]"}]}'
+        //     ',{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":true,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":true,"colors":"[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]"}]}'
         if (s !== "") {
             let parjson = JSON.parse(s);
             let num = parjson.schemes.length;
@@ -211,7 +255,7 @@ class HistoryList extends React.Component<history_props, history_state> {
                 <div className={"two_lists"}>
                     <div className={"left_list"}>
                         <div className={"piece"}>
-                            <div className={"order"}>图号</div>
+                            <div className={"pic_class"}>图号</div>
                             <div className={"delete"}></div>
                             <div className={"select"}></div>
                             <div className="color_bind">取色样式</div>
@@ -224,7 +268,7 @@ class HistoryList extends React.Component<history_props, history_state> {
                     </div>
                     <div className={"left_list"}>
                         <div className={"piece"}>
-                            <div className={"order"}>图号</div>
+                            <div className={"pic_class"}>图号</div>
                             <div className={"delete"}></div>
                             <div className={"select"}></div>
                             <div className="color_bind">取色样式</div>

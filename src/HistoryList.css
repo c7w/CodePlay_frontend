@@ -35,31 +35,42 @@
 }
 
 .pic_class {
-  padding-right: 10px;
   width: 40px;
+  text-align: center;
 }
 
 .delete {
+  margin-right: 5px;
   padding-right: 2px;
   width: 15px;
 }
 
+.delete:hover {
+  cursor: pointer;
+}
+
 .select {
+  margin-right: 5px;
   padding-right: 5px;
   width: 15px;
+}
+
+.select:hover {
+  cursor: pointer;
 }
 
 .color_bind {
   display: flex;
   flex-direction: row;
-  padding-right: 10px;
-  margin-right: 20px;
+  margin-right: 15px;
   width: 150px;
-  text-align: center;
+}
+
+.color_bind:hover {
+  cursor: pointer;
 }
 
 .author {
-  padding-right: 10px;
   margin-right: 20px;
   width: 100px;
   text-align: center;
@@ -69,7 +80,6 @@
 }
 
 .pic_name {
-  padding-right: 10px;
   margin-right: 20px;
   width: 100px;
   text-align: center;
@@ -82,14 +92,3 @@
   width: 100px;
   height: 20px;
 }
-
-/*.order {*/
-/*  padding: ;*/
-/*  margin: ;*/
-/*  width: ;*/
-/*  height: ;*/
-/*  display: flex;*/
-/*  flex-direction: ;*/
-/*  position: relative;*/
-
-/*}*/
