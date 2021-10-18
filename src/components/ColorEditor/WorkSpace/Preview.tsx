@@ -2,10 +2,8 @@ import React from "react";
 import { Tooltip } from "antd";
 
 interface preview_props {
-    readonly id: number; // preview图片的 id
     readonly raw_str: string; // svg字符串
     readonly color_arr: any; // 二维数组
-    readonly isPreview: boolean; // 判断是否是预览图
 }
 
 class Preview extends React.Component<preview_props, any>{
@@ -17,7 +15,7 @@ class Preview extends React.Component<preview_props, any>{
 
         color_num = my_color.length;
         for (let i = 0; i < color_num; i++){
-            let tmp = "rgba(" + my_color[i][4] + "," + my_color[i][5] + "," + my_color[i][6] + "," + my_color[i][3] + ")";
+            let tmp = "rgba(" + my_color[i][0] + "," + my_color[i][1] + "," + my_color[i][2] + "," + my_color[i][3] + ")";
             tmp = "fill=" + '"' + tmp + '" opacity=' + my_color[i][3];
             color_saved.push(tmp);
         }
@@ -30,7 +28,7 @@ class Preview extends React.Component<preview_props, any>{
 
         return (
             <Tooltip placement="topLeft" title="请选中以编辑此线稿" color="#2db7f5" arrowPointAtCenter>
-                <div id = {"sketch" + (this.props.isPreview ? "" : this.props.id)} className={"preview_svg"}>
+                <div className={"preview_svg"}>
                     <div dangerouslySetInnerHTML={{__html: s}}/>
                 </div>
             </Tooltip>

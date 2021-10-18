@@ -45,7 +45,7 @@ class ChooseSketch extends React.Component<choose_props, choose_state>{
             for (let j = 0; j <= Math.min(3, scratch_num - i * 4 - 1); j++){
                 let index = i * 4 + j;
                 let scratch_data = rawList[index].data;
-                inside_arr.push(<div className={"scratch_item"} onClick={() => {this.handler(index)}}><Preview raw_str={scratch_data} isPreview={false} color_arr={this.props.colorValueList[index]} id={index}/></div>);
+                inside_arr.push(<div className={"scratch_item"} onClick={() => {this.handler(index)}}><Preview raw_str={scratch_data} color_arr={this.props.colorValueList[index]} /></div>);
             }
             all_items.push(<div className={"one_row"}>{inside_arr}</div>);
         }

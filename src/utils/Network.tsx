@@ -91,12 +91,12 @@ function changeUserScheme(operation:string,recordId:number,color:number[][],reco
 //浏览信息的获取，返回一个字符串化的json，改成GET
 function getExploreScheme(sketch_id:number,sort_strategy:string,approved:boolean):Promise<string>{
     let sessionid=getSessionId();
-    let body=JSON.stringify({
-        sessionId:sessionid,
-        sketch_id:sketch_id,
-        sort_strategy:sort_strategy,
-        approved:approved
-    })
+    // let body=JSON.stringify({
+    //     sessionId:sessionid,
+    //     sketch_id:sketch_id,
+    //     sort_strategy:sort_strategy,
+    //     approved:approved
+    // })
 
     let url=WEB_URL+"/api/exploreScheme"
     url=url+"?sessionId="+sessionid+"&sketch_id="+sketch_id+"&sort_strategy="+sort_strategy

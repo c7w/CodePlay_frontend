@@ -1,5 +1,5 @@
 import React from 'react';
-import './HistoryList.css';
+import '../../styles/HistoryList.css';
 import { Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faCheckCircle, faTimesCircle, faTrash} from "@fortawesome/free-solid-svg-icons";
