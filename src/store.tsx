@@ -38,14 +38,28 @@ const colorPickerSlice = createSlice({
     }
 });
 
+const creatorSlice = createSlice({
+    name: 'Creator',
+    initialState: {
+        sketchId: 0,
+    },
+    reducers: {
+        updateSketchId: (state, action) => {state.sketchId = action.payload},
+    }
+});
+
 export const {updateColorState, updateCurrColorIndex} = colorEditorSlice.actions
+export const {updatePickerState} = colorPickerSlice.actions
+export const {updateSketchId} = creatorSlice.actions
 export const getColorState = (state: any) => {return state.colorEditor.colorState};
-export const getCurrColorIndex = (state: any) => state.colorEditor.currColorIndex;
-export const getPickerState = (state: any) => state.colorPicker.updatePickerState;
+export const getCurrColorIndex = (state: any) => {return state.colorEditor.currColorIndex};
+export const getPickerState = (state: any) => { return state.colorPicker.colorState;};
+export const getCreatorSketchId = (state: any) => { return state.creator.sketchId;};
 
 export default configureStore({
   reducer: {
     colorEditor: colorEditorSlice.reducer,
     colorPicker: colorPickerSlice.reducer,
+    creator: creatorSlice.reducer,
   },
 })

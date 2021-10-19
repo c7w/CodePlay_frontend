@@ -5,10 +5,10 @@ import { promptToDesigner, getUserScheme, changeUserScheme, getExploreScheme, ge
 import {Button, Layout, Row} from "antd";
 import {Content, Header} from "antd/es/layout/layout";
 import HistoryList from "./HistoryList/HistoryList";
-import ColorEditor from "./ColorEditor/ColorEditor";
+import Creator from "./Creator/Creator";
 import { message } from 'antd';
 import InterActiveInExploration from "./Exploration/WorkSpace/ExploreOperation";
-import Preview from "./ColorEditor/WorkSpace/Preview";
+import Preview from "./Creator/ColorEditor/WorkSpace/Preview";
 
 
 interface MainpageProps{
@@ -114,7 +114,7 @@ const MainPage = (Props:MainpageProps):ReactElement=>{
 
     //设计师的赞同操作
     function approveOpeation(id:number):void{
-        if(role=="User") return;
+        if(role==="User") return;
         changeUserScheme("approve",id,[],"","","",0).then(
             resp=>{
                 changeSort(sortType);
@@ -124,7 +124,7 @@ const MainPage = (Props:MainpageProps):ReactElement=>{
 
     //设计师的取消赞同操作
     function disapproveOpeation(id:number):void{
-        if(role=="User") return;
+        if(role==="User") return;
         changeUserScheme("disapprove",id,[],"","","",0).then(
             resp=>{
                 changeSort(sortType);
@@ -157,7 +157,7 @@ const MainPage = (Props:MainpageProps):ReactElement=>{
             let p=message.schemes;
             let num:number=p.length;
             for(let i=0;i<num;i++){
-                if(p[i].id==id){
+                if(p[i].id===id){
                     let sketch_id=p[i].sketch_id;
                     let color=p[i].colors;
                     color=eval(color);
@@ -169,7 +169,7 @@ const MainPage = (Props:MainpageProps):ReactElement=>{
                                 <TopBar name={name} stateChangeFunction={switchChange} promptToDesigner={promptToDesigner} role={role} cheaked={true}/>
                             </Header>
                             <Content style={{ padding: '0 50px' }}>
-                                <ColorEditor sketchStr={JSON.stringify(sketchJson.current)} onSubmit={submitRecord} isHistory={true} colorValueArr={color} sketchId={sketch_id}/>
+                                <></>
                             </Content>
                         </Layout>
                     )

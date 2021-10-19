@@ -93,4 +93,9 @@ const getMin = (a: number, b: number, c: number) => {
     return min;
 }
 
-export {RGB2HSV, HSV2RGB};
+const String2ArrayRGB = (colorHexString: string):Array<number> => {
+    let R = parseInt(colorHexString.substring(1, 3), 16), G = parseInt(colorHexString.substring(3, 5), 16), B = parseInt(colorHexString.substring(5, 7), 16);
+    return [R, G, B];
+}
+
+export {RGB2HSV, HSV2RGB, String2ArrayRGB};
