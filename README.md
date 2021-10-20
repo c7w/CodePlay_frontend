@@ -1,11 +1,8 @@
+![FireShot Capture 103 - React App - localhost](https://i.loli.net/2021/10/20/qjNR5IEeQHCyi3a.png)
+
 ## TODO List
 
-数据流延迟一个生命周期不同步 换用redux
+太丑了 要美化 但是找不到人 三只鸽子咕我 mmp
 
-重构进度过半
-
-
-
-+ Refactorization
 + 在 Network.tsx 中修改 getSessionId()
 

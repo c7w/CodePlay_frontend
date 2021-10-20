@@ -1,40 +1,41 @@
 import React from "react";
-import {Col, Row, Switch} from 'antd';
+import {Col, message, Row, Switch} from 'antd';
 import  { useState } from 'react';
 import { Modal} from 'antd';
 import '../../styles/Navbar.css';
 import { Input } from 'antd';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilRuler, faRunning} from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import { getMainPageState } from "../../store";
 
 // TODO: Beautify the navbar
 
 interface TopBarProps{
     readonly name:string;
-    readonly stateChangeFunction:()=>void;
+    readonly stateChangeFunction:(refresh: boolean)=>void;
     readonly promptToDesigner:(value:string)=>Promise<boolean>;
     readonly role:string;
-    readonly cheaked:boolean;
 }
 
 function LoginOut(){
     window.location.href = "./logout";
 }
 
-interface Appprops{
+interface AppProps{
     readonly role:string;
     readonly submit:(value:string)=>Promise<boolean>
 }
 
-const App = (props:Appprops) => {
+const App = (props:AppProps) => {
     let role:string=props.role;
     let submit:(value:string)=>Promise<boolean>=props.submit;
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [key,setkey]=useState<string>();
 
     const showModal = () => {
-        if(role=="Designer"){
-            alert("您已经是设计师了！");
+        if(role==="Designer"){
+            message.info("您已经是设计师了！");
             return;
         }
         setIsModalVisible(true);
@@ -74,20 +75,22 @@ const App = (props:Appprops) => {
 
 
 //顶栏
-class TopBar extends React.Component<TopBarProps>{
-    render() {
-        return(
+const TopBar = (props: TopBarProps) => {
+
+    const mainPageState = useSelector(getMainPageState);
+
+    return(
         <Row justify="space-around" align={"middle"}>
             <Col span={4} style={{height:"73px"}} >
-                <p >欢迎，{this.props.name}</p>
+                <p >欢迎，{props.name}</p>
             </Col>
             <Col span={13}>
             </Col>
             <Col span={2} style={{height:"73px"}}>
-                <Switch  checkedChildren="创作" unCheckedChildren="浏览" defaultChecked={this.props.cheaked} onChange={this.props.stateChangeFunction}/>
+                <Switch  checkedChildren="创作" unCheckedChildren="浏览" checked={mainPageState.page === 'Creator'} onChange={()=>{props.stateChangeFunction(false);}}/>
             </Col>
             <Col span={1.25}>
-                <App  role={this.props.role} submit={this.props.promptToDesigner} />
+                <App role={props.role} submit={props.promptToDesigner} />
             </Col>
             <Col span={1.25} onClick={LoginOut}>
                 <Row style={{height:"3px", paddingLeft:"16px"}} align={"middle"}>
@@ -98,8 +101,7 @@ class TopBar extends React.Component<TopBarProps>{
                 </Row>
             </Col>
         </Row>
-        );
-    }
+    );
 }
 
 export default TopBar;

@@ -2,6 +2,7 @@ import React from 'react';
 import { String2ArrayRGB } from '../../../utils/Color';
 import '../../../styles/SketchList.css';
 import Preview from '../ColorEditor/WorkSpace/Preview'
+import { Tooltip } from 'antd';
 
 interface choose_props {
     readonly str: string; //原始的“{scheme:...}”字符串
@@ -58,7 +59,7 @@ class ChooseSketch extends React.Component<choose_props, choose_state>{
             for (let j = 0; j <= Math.min(3, scratch_num - i * 4 - 1); j++){
                 let index = i * 4 + j;
                 let scratch_data = rawList[index].data;
-                inside_arr.push(<div onClick={() => {this.handler(index)}}><Preview raw_str={scratch_data} color_arr={list[index]} /></div>);
+                inside_arr.push(<div style={{margin: '10px'}} onClick={() => {this.handler(rawList[index].id)}}><Preview raw_str={scratch_data} color_arr={list[index]} /></div>);
             }
             all_items.push(<div className={"one_row"} key={"row"+i}>{inside_arr}</div>);
         }

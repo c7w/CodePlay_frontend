@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getColorState, getCreatorSketchId, getCurrColorIndex, updateColorState, updateCurrColorIndex, updatePickerState } from "../../../store";
+import { setConstantValue } from "typescript";
+import { getColorState, getCreatorSketchId, getCurrColorIndex, getMainPageState, updateColorState, updateCurrColorIndex, updatePickerState } from "../../../store";
 import ColorButton from "./WorkSpace/ColorButton";
 import ColorPicker from "./WorkSpace/ColorPicker";
 import Preview from "./WorkSpace/Preview";
@@ -16,10 +17,12 @@ interface ColorEditorProps {
 
 const ColorEditor = (props: ColorEditorProps) => {
     const dispatch = useDispatch();
+    const [sketch, setSketch] = useState(props.sketch);
     const colorState = useSelector(getColorState);
     const currColorIndex = useSelector(getCurrColorIndex);
     const currSketchId = useSelector(getCreatorSketchId);
     const [init, setInit] = useState(0);
+    const mainPageState = useSelector(getMainPageState);
     // const [colorState, setColorState] = useState<Array<Array<number>>>(props.initColorValue);
     // const [currColorIndex, setCurrColorIndex] = useState<number>(0);
 
@@ -39,20 +42,21 @@ const ColorEditor = (props: ColorEditorProps) => {
     }
 
     useEffect(()=>{
-        dispatch(updateColorState(props.initColorValue));
         dispatch(updateCurrColorIndex(0));
+        setSketch(mainPageState.sketchList.sketch_list.filter((sketch: any) => {return sketch.id === currSketchId})[0].data);
         setInit(init+1);
     }, [currSketchId]);
 
     useEffect(()=>{
         dispatch(updatePickerState(colorState[currColorIndex]));
-        
     }, [currColorIndex, init, currSketchId]);
+
+    useEffect(()=>{console.debug(123)}, [props.sketch])
 
     return (
         <>
         <div className="sketchPreview">
-            <Preview raw_str={props.sketch} color_arr={colorState}></Preview>
+            <Preview raw_str={sketch} color_arr={colorState}></Preview>
         </div>
         <div className="colorToChoose">{buttonList}</div>
         <div className="ColorPicker">

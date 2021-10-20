@@ -27,11 +27,10 @@ class Preview extends React.Component<preview_props, any>{
         }
 
         return (
-            <Tooltip placement="topLeft" title="请选中以编辑此线稿" color="#2db7f5" arrowPointAtCenter>
-                <div className={"preview_svg"}>
-                    <div dangerouslySetInnerHTML={{__html: s}}/>
-                </div>
-            </Tooltip>
+            
+            <div className={"preview_svg"}>
+                <div dangerouslySetInnerHTML={{__html: s}}/>
+            </div>
         )
     }
 
