@@ -51,7 +51,7 @@ const ColorEditor = (props: ColorEditorProps) => {
         dispatch(updatePickerState(colorState[currColorIndex]));
     }, [currColorIndex, init, currSketchId]);
 
-    useEffect(()=>{console.debug(123)}, [props.sketch])
+    useEffect(()=>{}, [props.sketch])
 
     return (
         <>

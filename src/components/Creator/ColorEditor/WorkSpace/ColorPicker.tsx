@@ -133,10 +133,10 @@ const ColorPicker = (props: ColorPickerProps) => {
       </div>
       <div className="inputFrame">
         <p className="fontSize">
-          <b>线稿的名称 :</b>
+          <b>配色方案名称 :</b>
         </p>
         <Input
-          placeholder="Please input the name of your sketch ~ "
+          placeholder="Please input the name of your scheme ~ "
           allowClear
           value={name}
           onChange={(event: any)=>{setName(event.target.value)}}
@@ -144,10 +144,10 @@ const ColorPicker = (props: ColorPickerProps) => {
         <br />
         <br />
         <p className="fontSize">
-          <b>线稿的描述 :</b>
+          <b>配色方案描述 :</b>
         </p>
         <TextArea
-          placeholder="Please input the description of your sketch ~ "
+          placeholder="Please input the description of your scheme ~ "
           rows={4}
           allowClear
           value={description}

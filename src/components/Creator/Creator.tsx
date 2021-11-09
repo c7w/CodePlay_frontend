@@ -37,7 +37,7 @@ const Creator = (props: CreatorProps) => {
     })};
 
     useEffect(()=>{
-        console.debug('sketch id changed')
+        // console.debug('sketch id changed')
         setInit(init+1);
     }, [sketchId]);
 

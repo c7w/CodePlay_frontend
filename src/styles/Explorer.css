@@ -1,0 +1,17 @@
+.Explorer {
+
+}
+
+.ExplorerViewer {
+    margin: 0 auto 1rem;
+    background-color: rgba(172, 172, 172, 0.2);
+    border-radius: 2rem;
+}
+
+.ExplorerOperations{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1rem;
+}

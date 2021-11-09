@@ -3,19 +3,17 @@ import '../../styles/HistoryList.css';
 import { Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faCheckCircle, faTimesCircle, faTrash} from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from 'react-redux';
+import { getCreatorSketchId } from '../../store';
 
 interface history_props {
-    readonly sort: (type:string)=>void;
+    readonly sort: (type:string, approved: boolean)=>void;
     readonly getString: string;
     readonly show_select: boolean;
     readonly approve: (type:number)=>void;
     readonly delete: (type:number)=>void;
     readonly explore: (type:number)=>void;
     readonly disapprove: (type:number)=>void;
-}
-
-interface history_state {
-
 }
 
 interface piece_props {
@@ -68,10 +66,10 @@ class Piece extends React.Component<piece_props, piece_state> {
                 if (this.props.ifhide) {
                     return (
                         <div className={"piece"}>
-                            <div className={"pic_class"}>{this.props.pic_class}</div>
+                            {/* <div className={"pic_class"}>{this.props.pic_class}</div>
                             <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
                                 <FontAwesomeIcon icon={faTrash} style={{color:"red"}}/>
-                            </div>
+                            </div> */}
                             <div className={"select"} onClick={()=>{this.handler(this.state.ifapproved, this.props.id)}}>
                                 <FontAwesomeIcon icon={faCheckCircle} style={{color:"green"}}/>
                             </div>
@@ -86,13 +84,13 @@ class Piece extends React.Component<piece_props, piece_state> {
                 else {
                     return (
                         <div className={"piece"}>
-                            <div className={"pic_class"}>{this.props.pic_class}</div>
+                            {/* <div className={"pic_class"}>{this.props.pic_class}</div>
                             <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
                                 <FontAwesomeIcon icon={faTrash}/>
-                            </div>
+                            </div>*/}
                             <div className={"select"} onClick={()=>{this.handler(this.state.ifapproved, this.props.id)}}>
                                 <FontAwesomeIcon icon={faCheckCircle} style={{color:"green"}}/>
-                            </div>
+                            </div> 
                             <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
                                 {color_bind}
                             </div>
@@ -106,13 +104,13 @@ class Piece extends React.Component<piece_props, piece_state> {
                 if (this.props.ifhide) {
                     return (
                         <div className={"piece"}>
-                            <div className={"pic_class"}>{this.props.pic_class}</div>
+                            {/* <div className={"pic_class"}>{this.props.pic_class}</div>
                             <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
                                 <FontAwesomeIcon icon={faTrash} style={{color:"red"}}/>
-                            </div>
+                            </div>*/}
                             <div className={"select"} onClick={()=>{this.handler(this.state.ifapproved, this.props.id)}}>
-                                <FontAwesomeIcon icon={faTimesCircle} style={{color:"red"}}/>
-                            </div>
+                                <FontAwesomeIcon icon={faCheckCircle} style={{color:"grey"}}/>
+                            </div> 
                             <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
                                 {color_bind}
                             </div>
@@ -124,13 +122,13 @@ class Piece extends React.Component<piece_props, piece_state> {
                 else {
                     return (
                         <div className={"piece"}>
-                            <div className={"pic_class"}>{this.props.pic_class}</div>
+                            {/* <div className={"pic_class"}>{this.props.pic_class}</div>
                             <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
                                 <FontAwesomeIcon icon={faTrash}/>
-                            </div>
+                            </div>*/}
                             <div className={"select"} onClick={()=>{this.handler(this.state.ifapproved, this.props.id)}}>
-                                <FontAwesomeIcon icon={faTimesCircle} style={{color:"red"}}/>
-                            </div>
+                                <FontAwesomeIcon icon={faCheckCircle} style={{color:"grey"}}/>
+                            </div> 
                             <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
                                 {color_bind}
                             </div>
@@ -145,11 +143,11 @@ class Piece extends React.Component<piece_props, piece_state> {
             if (this.props.ifhide) {
                 return (
                     <div className={"piece"}>
-                        <div className={"pic_class"}>{this.props.pic_class}</div>
+                        {/* <div className={"pic_class"}>{this.props.pic_class}</div>
                         <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
                             <FontAwesomeIcon icon={faTrash} style={{color:"red"}}/>
-                        </div>
-                        <div className={"select"} onClick={()=>{this.props.approve(this.props.id)}}></div>
+                        </div>*/}
+                        <div className={"select"} onClick={()=>{this.props.approve(this.props.id)}}></div> 
                         <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
                             {color_bind}
                         </div>
@@ -161,11 +159,11 @@ class Piece extends React.Component<piece_props, piece_state> {
             else {
                 return (
                     <div className={"piece"}>
-                        <div className={"pic_class"}>{this.props.pic_class}</div>
+                        {/* <div className={"pic_class"}>{this.props.pic_class}</div>
                         <div className={"delete"} onClick={()=>{this.props.delete(this.props.id)}}>
                             <FontAwesomeIcon icon={faTrash}/>
-                        </div>
-                        <div className={"select"} onClick={()=>{this.props.approve(this.props.id)}}></div>
+                        </div>*/}
+                        <div className={"select"} onClick={()=>{this.props.approve(this.props.id)}}></div> 
                         <div className="color_bind" onClick={()=>{this.props.explore(this.props.id)}}>
                             {color_bind}
                         </div>
@@ -178,12 +176,13 @@ class Piece extends React.Component<piece_props, piece_state> {
     }
 }
 
-class HistoryList extends React.Component<history_props, history_state> {
+const HistoryList = (props: history_props)=>{
 
-    render() {
-        let arr_left = [];
+    let currSketchId = useSelector(getCreatorSketchId);
+
+    let arr_left = [];
         let arr_right = [];
-        let s = this.props.getString;
+        let s = props.getString;
         // let s = '{"schemes":[' +
         //     '{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":true,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":false,"colors":"[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]"}' +
         //     ',{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":false,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":true,"colors":"[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]"}' +
@@ -192,6 +191,7 @@ class HistoryList extends React.Component<history_props, history_state> {
         //     ',{"id":87,"submission_time":1633797634,"sketch_id":1,"name":"RuntimeErrrorrr","description":"CodeGOGOOGOGOGOGO","likes":14,"approved":true,"author":{"student_id":2020010951,"name":"cc7w","fullname":"昂","email":"gha@mails.tsinghua.edu.cn","role":"Designer"},"hidden":true,"colors":"[[224,0,29,0.5,90,200,100],[143,200,10,1,79,30,200]]"}]}'
         if (s !== "") {
             let parjson = JSON.parse(s);
+            parjson.schemes = parjson.schemes.filter((scheme: any)=>{return scheme.sketch_id === currSketchId;})
             let num = parjson.schemes.length;
             let left_num = num - Math.trunc(num / 2);
 
@@ -199,7 +199,7 @@ class HistoryList extends React.Component<history_props, history_state> {
                 let p = parjson.schemes[i];
                 let id = p.id;
                 let pic_class = p.sketch_id;
-                let select = this.props.show_select;
+                let select = props.show_select;
                 let mycolor = eval(p.colors);
                 let color_num = mycolor.length;
                 let author = p.author.fullname;
@@ -216,14 +216,14 @@ class HistoryList extends React.Component<history_props, history_state> {
                     color_str.push(tmp);
                 }
                 arr_left.push(<Piece ifhide={ifhide} ifapprove={ifapprove} id={id} select={select} author={author} pic_name={pic_name} pic_class={pic_class} color_num={color_num}
-                                     color_str={color_str} explore={this.props.explore} delete={this.props.delete} approve={this.props.approve} disapprove={this.props.disapprove}/>)
+                                     color_str={color_str} explore={props.explore} delete={props.delete} approve={props.approve} disapprove={props.disapprove}/>)
             }
 
             for(let i = left_num; i < num; i++){
                 let p = parjson.schemes[i];
                 let id = p.id;
                 let pic_class = p.sketch_id;
-                let select = this.props.show_select;
+                let select = props.show_select;
                 let mycolor = eval(p.colors);
                 let color_num = mycolor.length;
                 let author = p.author.fullname;
@@ -240,27 +240,27 @@ class HistoryList extends React.Component<history_props, history_state> {
                     color_str.push(tmp);
                 }
                 arr_right.push(<Piece ifhide={ifhide} ifapprove={ifapprove} id={id} select={select} author={author} pic_name={pic_name} pic_class={pic_class} color_num={color_num}
-                                     color_str={color_str} explore={this.props.explore} delete={this.props.delete} approve={this.props.approve} disapprove={this.props.disapprove}/>)
+                                     color_str={color_str} explore={props.explore} delete={props.delete} approve={props.approve} disapprove={props.disapprove}/>)
             }
-        }
-
-
-        return(
+        
+            return(
             <div className={"history_list"}>
                 <div className={"order_buttons"}>
-                    <Button shape={"round"} className={"order_button"} onClick={() => this.props.sort("vote")}>点赞降序</Button>
-                    <Button shape={"round"} className={"order_button"} onClick={() => this.props.sort("hue")}>色相顺序</Button>
-                    <Button shape={"round"} className={"order_button"} onClick={() => this.props.sort("designer_name")}>作者顺序</Button>
+                    <Button shape={"round"} className={"order_button"} onClick={() => props.sort("vote", false)}>点赞降序</Button>
+                    <Button shape={"round"} className={"order_button"} onClick={() => props.sort("hue", false)}>色相顺序</Button>
+                    <Button shape={"round"} className={"order_button"} onClick={() => props.sort("designer_name", false)}>作者顺序</Button>
+                    <div style={{flexGrow: 1}}></div>
+                    <Button shape={"round"} className={"order_button"} onClick={()=>{props.sort("", true)}}>仅查看遴选</Button>
                 </div>
                 <div className={"two_lists"}>
                     <div className={"left_list"}>
                         <div className={"piece"}>
-                            <div className={"pic_class"}>图号</div>
-                            <div className={"delete"}></div>
-                            <div className={"select"}></div>
-                            <div className="color_bind">取色样式</div>
-                            <div className="author">作者姓名</div>
-                            <div className="pic_name">图片名称</div>
+                            {/* <div className={"pic_class"}>图号</div>
+                            <div className={"delete"}></div>*/}
+                            <div className={"select"}></div> 
+                            <div className="color_bind">配色方案</div>
+                            <div className="author">作者</div>
+                            <div className="pic_name">方案名称</div>
                         </div>
                         <div>
                             {arr_left}
@@ -268,12 +268,12 @@ class HistoryList extends React.Component<history_props, history_state> {
                     </div>
                     <div className={"left_list"}>
                         <div className={"piece"}>
-                            <div className={"pic_class"}>图号</div>
-                            <div className={"delete"}></div>
+                            {/* <div className={"pic_class"}>图号</div>
+                            <div className={"delete"}></div> */}
                             <div className={"select"}></div>
-                            <div className="color_bind">取色样式</div>
-                            <div className="author">作者姓名</div>
-                            <div className="pic_name">图片名称</div>
+                            <div className="color_bind">配色方案</div>
+                            <div className="author">作者</div>
+                            <div className="pic_name">方案名称</div>
                         </div>
                         <div>
                             {arr_right}
@@ -281,8 +281,12 @@ class HistoryList extends React.Component<history_props, history_state> {
                     </div>
                 </div>
             </div>
-        )
-    }
-}
+            )
+        } else {
+            return <></>
+        }
+            
+
+};
 
 export default HistoryList;

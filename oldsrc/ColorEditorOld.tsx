@@ -15,7 +15,7 @@ interface ColorEditorProps {
     readonly isHistory: boolean; // 是否从历史记录传过来
     readonly sketchId: number; // 如果是从历史记录传过来的就渲染此 sketch
     readonly colorValueArr: Array<Array<number>>; // 如果是从历史记录传过来的就用此 二维数组 渲染上面的线稿
-    readonly sketchStr: string; // JSON 格式 包含以上两个参数
+    readonly : string; // JSON 格式 包含以上两个参数
     readonly onSubmit: (id: number, name: string, description: string,
                         colors: Array<Array<number>>) => void; // 提交函数(提交所选线稿的编辑信息)
 }

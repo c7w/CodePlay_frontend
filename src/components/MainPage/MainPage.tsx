@@ -1,5 +1,6 @@
-import { Layout, message, Row } from "antd";
+import { Button, Layout, message, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
+import Modal from "antd/lib/modal/Modal";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WEB_URL } from "../../Settings";
@@ -7,7 +8,8 @@ import { getMainPageState, updateColorState, updateCurrColorIndex, updateMainPag
 import { changeUserScheme, getExploreScheme, getSessionId, getSketch, getUserScheme, promptToDesigner } from "../../utils/Network";
 import Preview from "../Creator/ColorEditor/WorkSpace/Preview";
 import Creator from "../Creator/Creator";
-import InterActiveInExploration from "../Exploration/WorkSpace/ExploreOperation";
+import Explorer from "../Explorer/Explorer";
+import InterActiveInExploration from "../Explorer/WorkSpace/ExploreOperation";
 import HistoryList from "../HistoryList/HistoryList";
 import Navbar from "../Navbar/Navbar";
 
@@ -17,7 +19,7 @@ var submittedIn30s = false;
 const MainPage = () => {
 
     message.config({
-        maxCount: 3,
+        maxCount: 2,
     });
 
     const mainPageState = useSelector(getMainPageState);
@@ -27,17 +29,20 @@ const MainPage = () => {
     // Operations
 
     // Click sorting
-    const changeSort = (type: string) : void => {
-        if(mainPageState.userInfo.role === 'Designer') {
-            getExploreScheme(0,type,false).then(
+    const changeSort = (type: string, approvedOnly=false) : void => {
+        // if(mainPageState.userInfo.role === 'Designer') {
+        const currApprovedOnly = mainPageState.misc.approved;
+        if (approvedOnly) {
+            // Switch
+            getExploreScheme(0,mainPageState.misc.sortStrategy,!currApprovedOnly).then(
                 resp=>{
                     const newMisc = JSON.parse(JSON.stringify(mainPageState.misc));
-                    newMisc.sortStrategy = type;
+                    newMisc.approved = !currApprovedOnly;
                     dispatch(updateMainPageState({misc: newMisc, schemeList: resp}));
                 }
-            )
-        } else if (mainPageState.userInfo.role === 'User') {
-            getUserScheme(mainPageState.userInfo.student_id, type).then(
+            );
+        } else {
+            getExploreScheme(0,type,currApprovedOnly).then(
                 resp=>{
                     const newMisc = JSON.parse(JSON.stringify(mainPageState.misc));
                     newMisc.sortStrategy = type;
@@ -45,6 +50,16 @@ const MainPage = () => {
                 }
             )
         }
+
+        // } else if (mainPageState.userInfo.role === 'User') {
+        //     getUserScheme(mainPageState.userInfo.student_id, type).then(
+        //         resp=>{
+        //             const newMisc = JSON.parse(JSON.stringify(mainPageState.misc));
+        //             newMisc.sortStrategy = type;
+        //             dispatch(updateMainPageState({misc: newMisc, schemeList: resp}));
+        //         }
+        //     )
+        // }
     };
 
 
@@ -73,19 +88,25 @@ const MainPage = () => {
 
     // Submission
     const submitRecord = (sketch_id:number,name:string,description:string,color_List:number[][]):void => {
-        if(description === '' || name === '') { message.info("请输入线稿信息"); return;}
-        console.debug(mainPageState.misc.submittedIn30s);
+        if(name === '') { message.error("请输入配色方案名称!"); return;}
         if(submittedIn30s){
             message.info("您的提交过于频繁，请稍后！");
         }else{
             changeUserScheme("create",0,color_List,name,description,mainPageState.userInfo.student_id,sketch_id).then(
-                resp=>{
-                    message.info("提交成功");
-                    changeSort(mainPageState.misc.sortStrategy);
-                    submittedIn30s = true;
-                    setTimeout(()=>{
-                        submittedIn30s = false;
-                    },30000);
+                (resp: any)=>{
+                    if(resp.err === 'similar') {
+                        message.error("请不要提交与已有方案类似的方案!")
+                    } else if (resp.err === 'name duplicated') {
+                        message.error("请不要提交重名方案!")
+                    } else {
+                        message.info("提交成功");
+                        changeSort(mainPageState.misc.sortStrategy);
+                        submittedIn30s = true;
+                        setTimeout(()=>{
+                            submittedIn30s = false;
+                        },30000);
+                    }
+
                 }
             )
         }
@@ -102,30 +123,7 @@ const MainPage = () => {
         switchPage(false);
     }
 
-    const vote = (): void => {
-        changeUserScheme("vote",mainPageState.exploreScheme.id,[],'','','',0).then(
-            resp=>{message.info("点赞成功");}
-        )
-    }
-
-    //下一张
-    const next = (): void => {refreshExplore();}
-
-    //编辑
-    const edit = ():void => {
-        switchPage(false);
-        const exploreScheme = mainPageState.exploreScheme;
-
-        const sketch_id = exploreScheme.sketch_id;
-        const color = eval(exploreScheme.colors);
-        console.debug(color);
-
-        // set states
-        dispatch(updateCurrColorIndex(0));
-        dispatch(updatePickerState(color[0]));
-        dispatch(updateSketchId(sketch_id));
-        dispatch(updateColorState(color));
-    }
+    
 
     //刷新随机浏览界面
     const refreshExplore = () : void => {
@@ -137,7 +135,6 @@ const MainPage = () => {
                 // Generate a random number between [0, schemeList.length)
                 const randomIndex = Math.floor(Math.random() * schemeList.length);
                 const newScheme = schemeList[randomIndex];
-                console.debug(newScheme);
 
                 dispatch(updateMainPageState({exploreScheme: newScheme}));
 
@@ -145,12 +142,7 @@ const MainPage = () => {
         )
     }
 
-    const getExploreRawSvg = (): string => {
-        const sketch_id = mainPageState.exploreScheme.sketch_id;
-        const filtered = mainPageState.sketchList.sketch_list.filter((sketch: any) => {return sketch.id === sketch_id});
-        if (filtered.length === 0) return '';
-        return filtered[0].data;
-    };
+
 
     //切换界面
     const switchPage = (refresh: boolean) => {
@@ -179,26 +171,26 @@ const MainPage = () => {
                 
                 
                 // Get user schemes
-                if( json.role === 'Designer' ) {
-                    getExploreScheme(0,"submission_time",false).then(
-                        resp=>{
-                            dispatch(updateMainPageState({schemeList: resp}));
-                        })
-                }
-                else if (json.role === 'User') {
-                    getUserScheme(mainPageState.userInfo.student_id,"submission_time").then(
-                        resp=>{
-                            dispatch(updateMainPageState({schemeList: resp}));
-                        }
-                    )
-                }
+                // if( json.role === 'Designer' ) {
+                getExploreScheme(0,"submission_time",false).then(
+                    resp=>{
+                        dispatch(updateMainPageState({schemeList: resp, exploreScheme: resp.schemes.length > 0 ? resp.schemes[0] : undefined}));
+                });
+                // }
+                // else if (json.role === 'User') {
+                //     getUserScheme(mainPageState.userInfo.student_id,"submission_time").then(
+                //         resp=>{
+                //             dispatch(updateMainPageState({schemeList: resp}));
+                //         }
+                //     )
+                // }
 
                 // Get sketch list
                 getSketch().then(resp=>{
                     dispatch(updateMainPageState({sketchList: resp})); 
                 })
             }
-        )
+        ).catch(()=>{message.error("网络开小差啦~"); return {};})
     }, []);
 
     useEffect(()=>{
@@ -215,7 +207,7 @@ const MainPage = () => {
               />
             <Layout>
                 <Content style={{ margin: "50px auto" }}>
-                    <div className="Creator" style={{display: mainPageState.page === 'Creator' ? '' : 'none'}}>
+                    <div className="Creator">
                         <Creator
                             sketch={JSON.stringify(mainPageState.sketchList)}
                             onSubmit={submitRecord} 
@@ -231,12 +223,26 @@ const MainPage = () => {
                         />
                     </div>
 
-                    <div className="Explore" style={{display: mainPageState.page === 'Explore' ? '' : 'none'}}>
+                    <div className="Explore">
+                        <Modal 
+                            title={mainPageState.exploreScheme.name}
+                            centered
+                            visible={mainPageState.page === 'Explore'}
+                            onCancel={() => {
+                                switchPage(false);
+                            }}
+                            footer={null}
+                        >
+                            <Explorer></Explorer>
+                        </Modal>
+                    </div>
+
+                    {/* <div className="Explore" style={{display: mainPageState.page === 'Explore' ? '' : 'none'}}>
                         <Row justify={"space-around"} align={"middle"}>
                             <Preview raw_str={getExploreRawSvg()} color_arr={mainPageState.exploreScheme.colors}/>
                         </Row>
-                        <InterActiveInExploration vote={vote} next={next} edit={edit} />
-                    </div>
+                        <InterActiveInExploration vote={vote} unvote={unvote} liked={mainPageState.exploreScheme.liked} next={next} edit={edit} />
+                    </div> */}
                 </Content>
             </Layout>
         </main>

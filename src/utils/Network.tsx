@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { WEB_URL } from "../Settings";
 import MD5 from "./MD5";
 
@@ -51,7 +52,7 @@ function getUserScheme(studentid:string,sort_strategy:string):Promise<string>{
         resp=>{
             return resp.json();
         }
-    );
+    ).catch(()=>{message.error("网络开小差啦~"); return {};});
     return result;
 }
 
@@ -84,7 +85,7 @@ function changeUserScheme(operation:string,recordId:number,color:number[][],reco
         resp=>{
             return resp.json()
         }
-    )
+    ).catch(()=>{message.error("网络开小差啦~"); return {};})
     return result;
 }
 
@@ -107,7 +108,7 @@ function getExploreScheme(sketch_id:number,sort_strategy:string,approved:boolean
         resp=>{
             return resp.json()
         }
-    )
+    ).catch(()=>{message.error("网络开小差啦~"); return {};})
     return result
 }
 
@@ -118,7 +119,7 @@ function getSketch():Promise<string>{
         resp=>{
             return resp.json()
         }
-    )
+    ).catch(()=>{message.error("网络开小差啦~"); return {};})
     return result
 }
 

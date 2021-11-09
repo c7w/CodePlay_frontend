@@ -1,7 +1,7 @@
 import React from "react";
 import {Col, message, Row, Switch} from 'antd';
 import  { useState } from 'react';
-import { Modal} from 'antd';
+import { Modal } from 'antd';
 import '../../styles/Navbar.css';
 import { Input } from 'antd';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

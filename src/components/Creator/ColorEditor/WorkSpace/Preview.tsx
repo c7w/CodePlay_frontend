@@ -29,7 +29,7 @@ class Preview extends React.Component<preview_props, any>{
         return (
             
             <div className={"preview_svg"}>
-                <div dangerouslySetInnerHTML={{__html: s}}/>
+                <div style={{display: 'flex', justifyContent:'center'}} dangerouslySetInnerHTML={{__html: s}}/>
             </div>
         )
     }

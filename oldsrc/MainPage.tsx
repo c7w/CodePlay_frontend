@@ -33,11 +33,10 @@ const LoginButton = ()=>{
 const MainPage = (Props:MainpageProps):ReactElement=>{
     const [login,setLogin]=useState<ReactElement>(<div/>);
     const [recordList,setRecordList]=useState<ReactElement>(<div/>);
-    const [explorePage,setExplorePage]=useState<ReactElement>(<div/>);
+    const [explorePage,setExplorePage]=useState<ReactElement>(<div/>)a;
     const [sketchList,setSketchList]=useState<string>();//线稿 的 list json
     const userScheme = useRef<string>("");
     const exploreScheme=useRef<any>("");
-    let counter:number=0;
     let sort:string="submission_time";
     let approved:boolean=false;
     let submitedIn30s:boolean=false;
@@ -67,7 +66,7 @@ const MainPage = (Props:MainpageProps):ReactElement=>{
             getExploreScheme(0,type,false).then(
                 resp=>{
                     sortType=type;
-                    userScheme.current = (resp);
+                    userScheme.current(resp);
                     setRecordList(
                         <Layout>
                             <Content style={{margin:"50px auto"}}>
@@ -304,7 +303,7 @@ const MainPage = (Props:MainpageProps):ReactElement=>{
 
     //入口逻辑
     useEffect(()=>{
-        fetch(completeUrl,).then(resp =>{
+        fetch(WEB_URL + "/api/userinfo" + "?sessionId=" + getSessionId(),).then(resp =>{
             console.debug(completeUrl);
             return resp.json();
         }).then(

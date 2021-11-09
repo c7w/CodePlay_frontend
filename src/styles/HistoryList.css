@@ -64,6 +64,7 @@
   flex-direction: row;
   margin-right: 15px;
   width: 150px;
+  justify-content: center;
 }
 
 .color_bind:hover {
