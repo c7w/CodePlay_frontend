@@ -1,15 +1,13 @@
-import { Button, Layout, message, Row } from "antd";
+import { Layout, message } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import Modal from "antd/lib/modal/Modal";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { WEB_URL } from "../../Settings";
-import { getMainPageState, updateColorState, updateCurrColorIndex, updateMainPageState, updatePickerState, updateSketchId } from "../../store";
-import { changeUserScheme, getExploreScheme, getSessionId, getSketch, getUserScheme, promptToDesigner } from "../../utils/Network";
-import Preview from "../Creator/ColorEditor/WorkSpace/Preview";
+import { getMainPageState, updateMainPageState } from "../../store";
+import { changeUserScheme, getExploreScheme, getSessionId, getSketch, promptToDesigner } from "../../utils/Network";
 import Creator from "../Creator/Creator";
 import Explorer from "../Explorer/Explorer";
-import InterActiveInExploration from "../Explorer/WorkSpace/ExploreOperation";
 import HistoryList from "../HistoryList/HistoryList";
 import Navbar from "../Navbar/Navbar";
 
@@ -121,6 +119,8 @@ const MainPage = () => {
         // 更改 exploreScheme 的信息 然后跳转过去
         dispatch(updateMainPageState({exploreScheme: filtered[0]}));
         switchPage(false);
+        // eslint-disable-next-line no-restricted-globals
+        
     }
 
     

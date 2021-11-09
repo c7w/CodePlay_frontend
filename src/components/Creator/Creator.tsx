@@ -61,6 +61,8 @@ const Creator = (props: CreatorProps) => {
                 <SketchList str={props.sketch} onClickSketch={(id: number) => {
                     dispatch(updateSketchId(id));
                     dispatch(updateColorState(getInitColorValue(id)));
+                    // eslint-disable-next-line no-restricted-globals
+                    scrollTo(0,0);
                     }}></SketchList>
             </div>
         </>

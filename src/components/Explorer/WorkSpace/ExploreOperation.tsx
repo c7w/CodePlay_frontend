@@ -20,7 +20,6 @@ const InterActiveInExploration=(props:InterActiveInExplorationProps)=>{
     
     
     function like():void{
-        console.debug("before" + mainPageState.exploreScheme.liked);
         if(mainPageState.exploreScheme.liked){
             const newExploreScheme = JSON.parse(JSON.stringify(mainPageState.exploreScheme));
             newExploreScheme.liked = false;

@@ -8,6 +8,7 @@ import {HeartOutlined, CheckCircleOutlined, DownloadOutlined, EditOutlined, Doub
 import { changeUserScheme, getExploreScheme } from "../../utils/Network";
 
 
+
 const Explorer = ()=>{
 
     const mainPageState = useSelector(getMainPageState);
@@ -119,11 +120,46 @@ const Explorer = ()=>{
         dispatch(updatePickerState(color[0]));
         dispatch(updateSketchId(sketch_id));
         dispatch(updateColorState(color));
+
+        // eslint-disable-next-line no-restricted-globals
+        scrollTo(0,0);
     }
 
     const download = ()=>{
         // TODO
-        console.debug("Download");
+        function fakeClick(obj: any) {
+            let ev = document.createEvent("MouseEvents");
+            ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            obj.dispatchEvent(ev);
+        }
+
+        function exportRaw(name: any, data: any) {
+            let urlObject = window.URL || window.webkitURL || window;
+            let export_blob = new Blob([data]);
+            let save_link : any = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+            save_link.href = urlObject.createObjectURL(export_blob);
+            save_link.download = name;
+            fakeClick(save_link);
+        }
+
+        let my_color =  mainPageState.exploreScheme.colors; // [RGBAHSV]
+        let color_num;
+        let color_saved = []
+
+        color_num = my_color.length;
+        for (let i = 0; i < color_num; i++){
+            let tmp = "rgba(" + my_color[i][0] + "," + my_color[i][1] + "," + my_color[i][2] + "," + my_color[i][3] + ")";
+            tmp = "fill=" + '"' + tmp + '" opacity="' + my_color[i][3] + '"';
+            color_saved.push(tmp);
+        }
+
+        let svg = getExploreRawSvg();
+        for (let i = 1; i <= color_num; i++) {
+            let tmp = "%%" + i.toString() + "%%";
+            svg = svg.replaceAll(tmp, color_saved[i-1]);
+        }
+
+        exportRaw(mainPageState.exploreScheme.name + '.svg', svg)
     };
 
     return (<div className={"Explorer"} >
