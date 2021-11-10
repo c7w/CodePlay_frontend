@@ -61,7 +61,7 @@ const Creator = (props: CreatorProps) => {
                 <SketchList str={props.sketch} onClickSketch={(id: number) => {
                     dispatch(updateSketchId(id));
                     dispatch(updateColorState(getInitColorValue(id)));
-                    }}></SketchList>
+                }}/>
             </div>
         </>
     );

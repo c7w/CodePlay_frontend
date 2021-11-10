@@ -1,5 +1,5 @@
 import React from "react";
-import {Col, message, Row, Switch} from 'antd';
+import {Col, message, Row, Switch, Space, Tooltip} from 'antd';
 import  { useState } from 'react';
 import { Modal } from 'antd';
 import '../../styles/Navbar.css';
@@ -64,7 +64,10 @@ const App = (props:AppProps) => {
 
     return (
         <>
-            <FontAwesomeIcon icon={ faPencilRuler } size={"2x"} onClick={showModal} />
+            <Tooltip placement="topLeft" title="来成为设计师吧！" color="#2db7f5" arrowPointAtCenter>
+                <FontAwesomeIcon className="designer" icon={ faPencilRuler } size={"1x"} onClick={showModal} />
+            </Tooltip>
+
             <Modal title="注册成为设计师" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                 <p>请输入注册邀请码</p>
                 <Input placeholder="Basic usage" id="keyText" value={key} onChange={event=>{valueChange(event.target.value)}}/>
@@ -79,28 +82,45 @@ const TopBar = (props: TopBarProps) => {
 
     const mainPageState = useSelector(getMainPageState);
 
+
+
     return(
-        <Row justify="space-around" align={"middle"}>
-            <Col span={4} style={{height:"73px"}} >
-                <p >欢迎，{props.name}</p>
-            </Col>
-            <Col span={13}>
-            </Col>
-            <Col span={2} style={{height:"73px"}}>
-                <Switch  checkedChildren="创作" unCheckedChildren="浏览" checked={mainPageState.page === 'Creator'} onChange={()=>{props.stateChangeFunction(false);}}/>
-            </Col>
-            <Col span={1.25}>
+        <div className="navBar">
+            <div className="left">
+                <div className="welcome">
+                    <span>Welcome to {'\u00A0'}</span>
+                    <div className="CodePlay"> CodePlay {'\u00A0'}</div>
+                    <span> world , {'\u00A0'}</span>
+                    <span>{props.name}</span>
+                </div>
+            </div>
+            <div className="right">
+                <Space align="center" size={100}>
                 <App role={props.role} submit={props.promptToDesigner} />
-            </Col>
-            <Col span={1.25} onClick={LoginOut}>
-                <Row style={{height:"3px", paddingLeft:"16px"}} align={"middle"}>
-                    <FontAwesomeIcon icon={ faRunning} size={"2x"} />
-                </Row>
-                <Row style={{height:"38px"}} align={"middle"}>
-                    退出登录
-                </Row>
-            </Col>
-        </Row>
+                <div className="logOut">
+                    <span onClick={LoginOut}>退出登录</span>
+                </div>
+                </Space>
+
+
+            </div>
+        </div>
+        // <Row justify="space-around" align={"middle"}>
+        //     <Col span={10} style={{height:"73px"}} >
+        //         <div className="font">
+        //             <p >Welcome to CodePlay world, {props.name}</p>
+        //         </div>
+        //     </Col>
+        //     <Col span={13}>
+        //     </Col>
+        //     <Col span={2} style={{height:"73px"}}>
+        //         <Switch  checkedChildren="创作" unCheckedChildren="浏览" checked={mainPageState.page === 'Creator'} onChange={()=>{props.stateChangeFunction(false);}}/>
+        //     </Col>
+        //     <Col span={1.25}>
+        //         <App role={props.role} submit={props.promptToDesigner} />
+        //     </Col>
+
+        // </Row>
     );
 }
 

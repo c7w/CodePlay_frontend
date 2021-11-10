@@ -11,7 +11,7 @@ interface ColorEditorProps {
     sketch: string;
     sketch_id: number;
     initColorValue: Array<Array<number>>; // [[R, G, B, A, H, S, V] x n]
-    onSubmit: (sketch_id:number,name:string,discription:string,color_List:number[][])=>void;
+    onSubmit: (sketch_id: number, name: string, description: string, color_List: number[][])=>void;
 }
 
 
@@ -38,7 +38,9 @@ const ColorEditor = (props: ColorEditorProps) => {
     const buttonList = [] ;
     const length = props.initColorValue.length;
     for (let i = 0; i < length; ++i) {
-        buttonList.push(<ColorButton key={"button-"+i} id={i} onClick={()=>{dispatch(updateCurrColorIndex(i));} } color={colorState[i]} selected={currColorIndex === i}></ColorButton>)
+        buttonList.push(<ColorButton key={"button-" + i} id={i} onClick={() => {
+            dispatch(updateCurrColorIndex(i));
+        }} color={colorState[i]} selected={currColorIndex === i}/>)
     }
 
     useEffect(()=>{
@@ -56,11 +58,13 @@ const ColorEditor = (props: ColorEditorProps) => {
     return (
         <>
         <div className="sketchPreview">
-            <Preview raw_str={sketch} color_arr={colorState}></Preview>
+            <Preview raw_str={sketch} color_arr={colorState}/>
         </div>
         <div className="colorToChoose">{buttonList}</div>
         <div className="ColorPicker">
-            <ColorPicker initColor={colorState[currColorIndex]} colorOnChange={onColorPickerColorChange} onSubmit={(name: string, description: string)=>{props.onSubmit(props.sketch_id, name, description, colorState)}}></ColorPicker>
+            <ColorPicker initColor={colorState[currColorIndex]} colorOnChange={onColorPickerColorChange} onSubmit={(name: string, description: string) => {
+    props.onSubmit(props.sketch_id, name, description, colorState)
+}}/>
         </div>
         </>
     );

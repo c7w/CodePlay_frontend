@@ -1,2 +1,68 @@
 @import '~antd/dist/antd.css';
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Mochiy+Pop+P+One&family=ZCOOL+KuaiLe&display=swap');
 
+.font {
+    font: bold 25px/100% "微软雅黑", "Lucida Grande", "Lucida Sans", Helvetica, Arial, Sans;
+}
+
+.navBar {
+    font-size: 20px;
+    height: 50px;
+    background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
+    position: sticky;
+    display: flex;
+    flex-direction: row;
+    top: 0;
+    justify-content: space-between;
+    z-index: 32;
+}
+
+.left {
+    width: 70%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    padding-left: 5%;
+    align-content: center;
+}
+
+.welcome {
+    font-family: 'Mochiy Pop P One', sans-serif;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.CodePlay {
+    background: linear-gradient(to right, red, blue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.right {
+    width: 30%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+}
+
+.designer:hover {
+    cursor: pointer;
+}
+
+.logOut {
+    font-family: 'ZCOOL KuaiLe', cursive;
+}
+
+.logOut:hover {
+    cursor: pointer;
+}
+
+.font1 {
+    font-family: 'Mochiy Pop P One', sans-serif;
+    font-size: 20px;
+}

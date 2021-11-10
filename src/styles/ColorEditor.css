@@ -41,24 +41,51 @@
 }
 
 .colorPicker {
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
-.HSVColor {
+.colorArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.up {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.LeftColor {
     width: 300px;
-    margin: 20px;
-    padding: 20px;
+    padding-left: 20px;
+    padding-top: 20px;
     background-color: white;
 }
 
-.RGBColor {
+.RightColor {
     width: 300px;
-    margin: 20px;
-    padding: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
     background-color: white;
+}
+
+.bottomColor {
+    width: 600px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    background-color: white;
+}
+
+.down {
+    justify-content: center;
+    align-items: center;
 }
 
 .inputFrame {

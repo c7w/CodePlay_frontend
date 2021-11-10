@@ -12,6 +12,7 @@ import Explorer from "../Explorer/Explorer";
 import InterActiveInExploration from "../Explorer/WorkSpace/ExploreOperation";
 import HistoryList from "../HistoryList/HistoryList";
 import Navbar from "../Navbar/Navbar";
+import "../../styles/MainPage.css"
 
 
 var submittedIn30s = false;
@@ -199,8 +200,18 @@ const MainPage = () => {
 
     return (
         <main>
-            <Navbar 
-              name={mainPageState.userInfo.name} 
+            <div className="scheme">
+                <div className="selected">
+                    <span><b>精选方案</b></span>
+                    {/*  Todo:  */}
+                </div>
+                <div className="popularity">
+                    <span><b>人气方案</b></span>
+                    {/*  Todo:  */}
+                </div>
+            </div>
+            <Navbar
+              name={mainPageState.userInfo.name}
               role={mainPageState.userInfo.role}
               stateChangeFunction={switchPage}
               promptToDesigner={promptToDesigner}
@@ -210,7 +221,7 @@ const MainPage = () => {
                     <div className="Creator">
                         <Creator
                             sketch={JSON.stringify(mainPageState.sketchList)}
-                            onSubmit={submitRecord} 
+                            onSubmit={submitRecord}
                         />
                         <HistoryList
                             disapprove={disapproveOperation}
@@ -219,12 +230,12 @@ const MainPage = () => {
                             show_select={mainPageState.userInfo.role === 'Designer'}
                             approve={approveOperation}
                             delete={deleteRecord}
-                            explore={exploreOperation} 
+                            explore={exploreOperation}
                         />
                     </div>
 
                     <div className="Explore">
-                        <Modal 
+                        <Modal
                             title={mainPageState.exploreScheme.name}
                             centered
                             visible={mainPageState.page === 'Explore'}
