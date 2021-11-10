@@ -52,12 +52,12 @@ class ChooseSketch extends React.Component<choose_props, choose_state>{
             })
         })
         let scratch_num = list.length;
-        let row = Math.trunc(scratch_num / 4) + 1;
+        let row = Math.trunc(scratch_num / 3) + 1;
         let all_items = [];
         for (let i = 0; i < row; i++){
             let inside_arr = [];
-            for (let j = 0; j <= Math.min(3, scratch_num - i * 4 - 1); j++){
-                let index = i * 4 + j;
+            for (let j = 0; j <= Math.min(2, scratch_num - i * 3 - 1); j++){
+                let index = i * 3 + j;
                 let scratch_data = rawList[index].data;
                 inside_arr.push(
                     <Tooltip placement="right" title="请点击我以进行着色哦" color="#2db7f5" arrowPointAtCenter>

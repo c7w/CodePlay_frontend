@@ -4,7 +4,7 @@ import MD5 from "./MD5";
 
 
 function getSessionId(): string{
-    return "9NCcToWtip7blkwuI1VmgPGXFBQnD2v8"; // TODO: delete later
+    // return "9NCcToWtip7blkwuI1VmgPGXFBQnD2v8"; // TODO: delete later
     let sessionId="sessionId=";
     let cookie:string[]=document.cookie.split(';');
     for(let i=0;i<cookie.length;i++){

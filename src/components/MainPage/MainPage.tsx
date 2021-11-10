@@ -13,6 +13,7 @@ import Explorer from "../Explorer/Explorer";
 import HistoryList from "../HistoryList/HistoryList";
 import Navbar from "../Navbar/Navbar";
 import "../../styles/MainPage.css"
+import { ApprovedList, MostLikedList } from "../Sidebar/Sidebar";
 
 
 var submittedIn30s = false;
@@ -153,6 +154,7 @@ const MainPage = () => {
 
     // The first time the page is rendered...
     useEffect(()=>{
+        console.debug("CodePlay Designed & Coded by c7w & his fellow. https://www.github.com/c7w/");
         fetch(WEB_URL + "/api/userinfo?sessionId=" + getSessionId(),).then(resp =>resp.json()).then(
             json=>{
                 
@@ -203,11 +205,11 @@ const MainPage = () => {
             <div className="scheme">
                 <div className="selected">
                     <span><b>精选方案</b></span>
-                    {/*  Todo:  */}
+                    <ApprovedList explore={exploreOperation}/>
                 </div>
                 <div className="popularity">
                     <span><b>人气方案</b></span>
-                    {/*  Todo:  */}
+                    <MostLikedList explore={exploreOperation}/>
                 </div>
             </div>
             <Navbar
