@@ -57,11 +57,13 @@ const ColorEditor = (props: ColorEditorProps) => {
     return (
         <>
         <div className="sketchPreview">
-            <Preview raw_str={sketch} color_arr={colorState}></Preview>
+            <Preview raw_str={sketch} color_arr={colorState}/>
         </div>
         <div className="colorToChoose">{buttonList}</div>
         <div className="ColorPicker">
-            <ColorPicker initColor={colorState[currColorIndex]} colorOnChange={onColorPickerColorChange} onSubmit={(name: string, description: string)=>{props.onSubmit(props.sketch_id, name, description, colorState)}}></ColorPicker>
+            <ColorPicker initColor={colorState[currColorIndex]} colorOnChange={onColorPickerColorChange} onSubmit={(name: string, description: string) => {
+                props.onSubmit(props.sketch_id, name, description, colorState)
+            }}/>
         </div>
         </>
     );
