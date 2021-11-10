@@ -59,7 +59,13 @@ class ChooseSketch extends React.Component<choose_props, choose_state>{
             for (let j = 0; j <= Math.min(3, scratch_num - i * 4 - 1); j++){
                 let index = i * 4 + j;
                 let scratch_data = rawList[index].data;
-                inside_arr.push(<div style={{margin: '10px'}} onClick={() => {this.handler(rawList[index].id)}}><Preview raw_str={scratch_data} color_arr={list[index]} /></div>);
+                inside_arr.push(
+                    <Tooltip placement="right" title="请点击我以进行着色哦" color="#2db7f5" arrowPointAtCenter>
+                        <div style={{margin: '10px', cursor: 'pointer', backgroundColor: 'rgba(240,242,245,1)', borderRadius: '1rem', padding: '1rem'}} onClick={() => {this.handler(rawList[index].id)}}>
+                            <Preview raw_str={scratch_data} color_arr={list[index]} />
+                        </div>
+                    </Tooltip>
+                );
             }
             all_items.push(<div className={"one_row"} key={"row"+i}>{inside_arr}</div>);
         }

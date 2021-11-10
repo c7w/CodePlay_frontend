@@ -7,6 +7,7 @@
 .two_lists {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .order_buttons {
@@ -15,6 +16,8 @@
   padding-left: 50px;
   padding-top: 20px;
   padding-bottom: 20px;
+  width: 100%;
+  max-width: 900px;
 }
 
 .order_button {
@@ -26,6 +29,13 @@
   display: flex;
   flex-direction: column;
   padding-left: 50px;
+}
+
+.history_list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .piece {

@@ -1,4 +1,4 @@
-import { Input, message } from "antd";
+import { Input, message, Tooltip } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useDispatch, useSelector } from "react-redux";
 import { getMainPageState, updateColorState, updateCurrColorIndex, updateMainPageState, updatePickerState, updateSketchId } from "../../store";
@@ -6,6 +6,7 @@ import Preview from "../Creator/ColorEditor/WorkSpace/Preview";
 import '../../styles/Explorer.css'
 import {HeartOutlined, CheckCircleOutlined, DownloadOutlined, EditOutlined, DoubleRightOutlined} from '@ant-design/icons'
 import { changeUserScheme, getExploreScheme } from "../../utils/Network";
+
 
 
 const Explorer = ()=>{
@@ -119,11 +120,49 @@ const Explorer = ()=>{
         dispatch(updatePickerState(color[0]));
         dispatch(updateSketchId(sketch_id));
         dispatch(updateColorState(color));
+
+        // eslint-disable-next-line no-restricted-globals
+        scrollTo(0,0);
     }
 
     const download = ()=>{
         // TODO
-        console.debug("Download");
+        function fakeClick(obj: any) {
+            let ev = document.createEvent("MouseEvents");
+            ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            obj.dispatchEvent(ev);
+        }
+
+        function exportRaw(name: any, data: any) {
+            let urlObject = window.URL || window.webkitURL || window;
+            let export_blob = new Blob([data]);
+            let save_link : any = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+            save_link.href = urlObject.createObjectURL(export_blob);
+            save_link.download = name;
+            fakeClick(save_link);
+        }
+
+        let my_color =  mainPageState.exploreScheme.colors; // [RGBAHSV]
+        let color_num;
+        let color_saved = []
+
+        color_num = my_color.length;
+        for (let i = 0; i < color_num; i++){
+            let tmp = my_color[i][0].toString(16).padStart(2, '0');
+            tmp += my_color[i][1].toString(16).padStart(2, '0');
+            tmp += my_color[i][2].toString(16).padStart(2, '0');
+            tmp = "fill=" + '"#' + tmp + '"';
+            
+            color_saved.push(tmp);
+        }
+
+        let svg = getExploreRawSvg();
+        for (let i = 1; i <= color_num; i++) {
+            let tmp = "%%" + i.toString() + "%%";
+            svg = svg.replaceAll(tmp, color_saved[i-1]);
+        }
+
+        exportRaw(mainPageState.exploreScheme.name + '.svg', svg)
     };
 
     return (<div className={"Explorer"} >
@@ -139,62 +178,62 @@ const Explorer = ()=>{
             />
                 
             <TextArea
-                autoSize={{ minRows: 3 }}
+                autoSize={{ minRows: 3, maxRows: 3 }}
                 disabled
                 value={mainPageState.exploreScheme.description}
             />
         </div>
         <div className="ExplorerOperations" style={{userSelect: 'none'}}>
             <div className="ExplorerSelect">
-                <CheckCircleOutlined 
+                <Tooltip title="精选"><CheckCircleOutlined 
                     style={{
                         fontSize: '1.5rem',
-                        color: mainPageState.exploreScheme.approved ? 'green' : 'grey'
+                        color: mainPageState.exploreScheme.approved ? 'green' : 'grey',
                         
                     }} 
                     onClick={()=>{approve()}}
-                />
+                /></Tooltip>
             </div>
             <div className="ExplorerLike" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
-                <HeartOutlined  
+                <Tooltip title="为设计增加人气"><HeartOutlined  
                     style={{
                         fontSize: '1.5rem',
                         color: mainPageState.exploreScheme.liked ? 'red' : undefined
                         
                     }} 
                     onClick={()=>{like()}}
-                />
+                /></Tooltip>
                 <span style={{marginLeft: '0.5rem', fontSize: '0.9rem'}}>{mainPageState.exploreScheme.likes}</span>
             </div>
             <div className="ExplorerDownload">
-                <DownloadOutlined  
+                <Tooltip title="导出为 SVG"><DownloadOutlined  
                     style={{
                         fontSize: '1.5rem',
                         color: 'black'
                         
                     }} 
                     onClick={()=>{download()}}
-                />
+                /></Tooltip>
             </div>
             <div className="ExplorerEdit">
-                <EditOutlined  
+                <Tooltip title="二次创作"><EditOutlined  
                     style={{
                         fontSize: '1.5rem',
                         color: 'black'
                         
                     }} 
                     onClick={()=>{edit()}}
-                />
+                /></Tooltip>
             </div>
             <div className="ExplorerNext">
-                <DoubleRightOutlined 
+                <Tooltip title="随机浏览"><DoubleRightOutlined 
                     style={{
                         fontSize: '1.5rem',
                         color: 'black'
                         
                     }} 
                     onClick={()=>{next()}}
-                />
+                /></Tooltip>
             </div>
 
         </div>

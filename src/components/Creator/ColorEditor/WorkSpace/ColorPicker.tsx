@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import "../../../../styles/ColorEditor.css";
 
@@ -64,81 +65,72 @@ const ColorPicker = (props: ColorPickerProps) => {
 
   return (
     <div className="colorPicker">
-      <div className="colorArea">
-          <div className="up">
-              <div className="LeftColor">
-                  <ColorSlider
-                      description="饱和度(S):"
-                      id={1}
-                      onChange={colorOnChange}
-                      value={colorPickerState[5]}
-                      step={0.01}
-                      min={0}
-                      max={1}
-                  />
-                  <ColorSlider
-                      description="明度(V):"
-                      id={2}
-                      onChange={colorOnChange}
-                      value={colorPickerState[6]}
-                      step={0.01}
-                      min={0}
-                      max={1}
-                  />
-                  <ColorSlider
-                      description="不透明度(A)"
-                      id={3}
-                      onChange={colorOnChange}
-                      value={colorPickerState[3]}
-                      step={0.01}
-                      min={0}
-                      max={1}
-                  />
-              </div>
-              <div className="RightColor">
-                  <ColorSlider
-                      description="红色(R):"
-                      id={4}
-                      onChange={colorOnChange}
-                      value={colorPickerState[0]}
-                      step={1}
-                      min={0}
-                      max={255}
-                  />
-                  <ColorSlider
-                      description="绿色(G):"
-                      id={5}
-                      onChange={colorOnChange}
-                      value={colorPickerState[1]}
-                      step={1}
-                      min={0}
-                      max={255}
-                  />
-                  <ColorSlider
-                      description="蓝色(B):"
-                      id={6}
-                      onChange={colorOnChange}
-                      value={colorPickerState[2]}
-                      step={1}
-                      min={0}
-                      max={255}
-                  />
-              </div>
-          </div>
-          <div className="down">
-              <div className="bottomColor">
-                  <ColorSlider
-                      description="色相(H):"
-                      id={0}
-                      onChange={colorOnChange}
-                      value={colorPickerState[4]}
-                      step={1}
-                      min={0}
-                      max={360}
-                  />
-              </div>
-          </div>
-
+      <div className="HSVColor">
+        <ColorSlider
+          description="色相(H):"
+          id={0}
+          onChange={colorOnChange}
+          value={colorPickerState[4]}
+          step={1}
+          min={0}
+          max={360}
+        />
+        <ColorSlider
+          description="饱和度(S):"
+          id={1}
+          onChange={colorOnChange}
+          value={colorPickerState[5]}
+          step={0.01}
+          min={0}
+          max={1}
+        />
+        <ColorSlider
+          description="明度(V):"
+          id={2}
+          onChange={colorOnChange}
+          value={colorPickerState[6]}
+          step={0.01}
+          min={0}
+          max={1}
+        />
+        <ColorSlider
+          description="透明度(A)"
+          id={3}
+          onChange={colorOnChange}
+          value={colorPickerState[3]}
+          step={0.01}
+          min={0}
+          max={1}
+        />
+      </div>
+      <div className="RGBColor">
+        <ColorSlider
+          description="红色(R):"
+          id={4}
+          onChange={colorOnChange}
+          value={colorPickerState[0]}
+          step={1}
+          min={0}
+          max={255}
+        />
+        <ColorSlider
+          description="绿色(G):"
+          id={5}
+          onChange={colorOnChange}
+          value={colorPickerState[1]}
+          step={1}
+          min={0}
+          max={255}
+        />
+        <ColorSlider
+          description="蓝色(B):"
+          id={6}
+          onChange={colorOnChange}
+          value={colorPickerState[2]}
+          step={1}
+          min={0}
+          max={255}
+        />
       </div>
       <div className="inputFrame">
         <p className="fontSize">

@@ -110,6 +110,9 @@ const TopBar = (props: TopBarProps) => {
         //         <div className="font">
         //             <p >Welcome to CodePlay world, {props.name}</p>
         //         </div>
+        // <Row justify="space-around" align={"middle"}>
+        //     <Col span={4} style={{height:"73px"}} >
+        //         <p >欢迎，{props.name}</p>
         //     </Col>
         //     <Col span={13}>
         //     </Col>
@@ -119,7 +122,6 @@ const TopBar = (props: TopBarProps) => {
         //     <Col span={1.25}>
         //         <App role={props.role} submit={props.promptToDesigner} />
         //     </Col>
-
         // </Row>
     );
 }

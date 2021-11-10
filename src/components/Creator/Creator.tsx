@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getColorState, getCreatorSketchId, getCurrColorIndex, updateColorState, updatePickerState, updateSketchId } from "../../store";
@@ -57,14 +58,17 @@ const Creator = (props: CreatorProps) => {
                     initColorValue={getInitColorValue(sketchId)} 
                     onSubmit={props.onSubmit} />
             </div>
-            <div className="SketchList">
+            <div className="SketchList" style={{marginTop: '2rem'}}>
                 <SketchList str={props.sketch} onClickSketch={(id: number) => {
                     dispatch(updateSketchId(id));
                     dispatch(updateColorState(getInitColorValue(id)));
+                    // eslint-disable-next-line no-restricted-globals
+                    scrollTo(0, 0);
                 }}/>
             </div>
         </>
     );
 };
+
 
 export default Creator;

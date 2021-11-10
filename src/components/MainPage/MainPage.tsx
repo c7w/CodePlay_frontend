@@ -1,3 +1,4 @@
+
 import { Button, Layout, message, Row } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import Modal from "antd/lib/modal/Modal";
@@ -9,7 +10,6 @@ import { changeUserScheme, getExploreScheme, getSessionId, getSketch, getUserSch
 import Preview from "../Creator/ColorEditor/WorkSpace/Preview";
 import Creator from "../Creator/Creator";
 import Explorer from "../Explorer/Explorer";
-import InterActiveInExploration from "../Explorer/WorkSpace/ExploreOperation";
 import HistoryList from "../HistoryList/HistoryList";
 import Navbar from "../Navbar/Navbar";
 import "../../styles/MainPage.css"
@@ -259,5 +259,6 @@ const MainPage = () => {
         </main>
     );
 };
+
 
 export default MainPage;

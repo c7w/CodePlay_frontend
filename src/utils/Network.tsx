@@ -9,7 +9,7 @@ function getSessionId(): string{
     let cookie:string[]=document.cookie.split(';');
     for(let i=0;i<cookie.length;i++){
         let c=cookie[i].trim();
-        if(c.indexOf("sessionId")==0) return c.substring(sessionId.length,c.length);
+        if(c.indexOf("sessionId")===0) return c.substring(sessionId.length,c.length);
     }
     return "";
 }
