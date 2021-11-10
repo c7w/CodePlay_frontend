@@ -10,6 +10,7 @@ import Creator from "../Creator/Creator";
 import Explorer from "../Explorer/Explorer";
 import HistoryList from "../HistoryList/HistoryList";
 import Navbar from "../Navbar/Navbar";
+import { ApprovedList, MostLikedList } from "../Sidebar/Sidebar";
 
 
 var submittedIn30s = false;
@@ -245,6 +246,12 @@ const MainPage = () => {
                     </div> */}
                 </Content>
             </Layout>
+            <div className="ApprovedList">
+                    <ApprovedList explore={exploreOperation} ></ApprovedList>
+            </div>
+            <div className="MostLikedList">
+                <MostLikedList explore={exploreOperation}></MostLikedList>
+            </div>
         </main>
     );
 };

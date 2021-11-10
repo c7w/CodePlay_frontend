@@ -57,7 +57,7 @@ const Creator = (props: CreatorProps) => {
                     initColorValue={getInitColorValue(sketchId)} 
                     onSubmit={props.onSubmit} />
             </div>
-            <div className="SketchList">
+            <div className="SketchList" style={{marginTop: '2rem'}}>
                 <SketchList str={props.sketch} onClickSketch={(id: number) => {
                     dispatch(updateSketchId(id));
                     dispatch(updateColorState(getInitColorValue(id)));

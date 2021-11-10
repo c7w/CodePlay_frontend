@@ -1,4 +1,4 @@
-import { Input, message } from "antd";
+import { Input, message, Tooltip } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useDispatch, useSelector } from "react-redux";
 import { getMainPageState, updateColorState, updateCurrColorIndex, updateMainPageState, updatePickerState, updateSketchId } from "../../store";
@@ -148,8 +148,11 @@ const Explorer = ()=>{
 
         color_num = my_color.length;
         for (let i = 0; i < color_num; i++){
-            let tmp = "rgba(" + my_color[i][0] + "," + my_color[i][1] + "," + my_color[i][2] + "," + my_color[i][3] + ")";
-            tmp = "fill=" + '"' + tmp + '" opacity="' + my_color[i][3] + '"';
+            let tmp = my_color[i][0].toString(16).padStart(2, '0');
+            tmp += my_color[i][1].toString(16).padStart(2, '0');
+            tmp += my_color[i][2].toString(16).padStart(2, '0');
+            tmp = "fill=" + '"#' + tmp + '"';
+            
             color_saved.push(tmp);
         }
 
@@ -175,62 +178,62 @@ const Explorer = ()=>{
             />
                 
             <TextArea
-                autoSize={{ minRows: 3 }}
+                autoSize={{ minRows: 3, maxRows: 3 }}
                 disabled
                 value={mainPageState.exploreScheme.description}
             />
         </div>
         <div className="ExplorerOperations" style={{userSelect: 'none'}}>
             <div className="ExplorerSelect">
-                <CheckCircleOutlined 
+                <Tooltip title="精选"><CheckCircleOutlined 
                     style={{
                         fontSize: '1.5rem',
-                        color: mainPageState.exploreScheme.approved ? 'green' : 'grey'
+                        color: mainPageState.exploreScheme.approved ? 'green' : 'grey',
                         
                     }} 
                     onClick={()=>{approve()}}
-                />
+                /></Tooltip>
             </div>
             <div className="ExplorerLike" style={{display: 'flex', justifyContent:'center', alignItems:'center'}}>
-                <HeartOutlined  
+                <Tooltip title="为设计增加人气"><HeartOutlined  
                     style={{
                         fontSize: '1.5rem',
                         color: mainPageState.exploreScheme.liked ? 'red' : undefined
                         
                     }} 
                     onClick={()=>{like()}}
-                />
+                /></Tooltip>
                 <span style={{marginLeft: '0.5rem', fontSize: '0.9rem'}}>{mainPageState.exploreScheme.likes}</span>
             </div>
             <div className="ExplorerDownload">
-                <DownloadOutlined  
+                <Tooltip title="导出为 SVG"><DownloadOutlined  
                     style={{
                         fontSize: '1.5rem',
                         color: 'black'
                         
                     }} 
                     onClick={()=>{download()}}
-                />
+                /></Tooltip>
             </div>
             <div className="ExplorerEdit">
-                <EditOutlined  
+                <Tooltip title="二次创作"><EditOutlined  
                     style={{
                         fontSize: '1.5rem',
                         color: 'black'
                         
                     }} 
                     onClick={()=>{edit()}}
-                />
+                /></Tooltip>
             </div>
             <div className="ExplorerNext">
-                <DoubleRightOutlined 
+                <Tooltip title="随机浏览"><DoubleRightOutlined 
                     style={{
                         fontSize: '1.5rem',
                         color: 'black'
                         
                     }} 
                     onClick={()=>{next()}}
-                />
+                /></Tooltip>
             </div>
 
         </div>

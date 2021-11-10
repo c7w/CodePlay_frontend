@@ -249,7 +249,7 @@ const HistoryList = (props: history_props)=>{
                     <Button shape={"round"} className={"order_button"} onClick={() => props.sort("vote", false)}>点赞降序</Button>
                     <Button shape={"round"} className={"order_button"} onClick={() => props.sort("hue", false)}>色相顺序</Button>
                     <Button shape={"round"} className={"order_button"} onClick={() => props.sort("designer_name", false)}>作者顺序</Button>
-                    <div style={{flexGrow: 1}}></div>
+                    <div style={{flexGrow: 100}}></div>
                     <Button shape={"round"} className={"order_button"} onClick={()=>{props.sort("", true)}}>仅查看遴选</Button>
                 </div>
                 <div className={"two_lists"}>

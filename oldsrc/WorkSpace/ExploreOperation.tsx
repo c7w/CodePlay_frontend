@@ -3,7 +3,7 @@ import {Col, Row} from "antd";
 import {faHeart, faPaintBrush, faRunning, faStepForward} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-import { getMainPageState, updateMainPageState } from "../../../store";
+import { getMainPageState, updateMainPageState } from "../../src/store";
 
 interface InterActiveInExplorationProps{
     readonly vote:()=>void;

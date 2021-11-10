@@ -80,27 +80,28 @@ const TopBar = (props: TopBarProps) => {
     const mainPageState = useSelector(getMainPageState);
 
     return(
-        <Row justify="space-around" align={"middle"}>
-            <Col span={4} style={{height:"73px"}} >
-                <p >欢迎，{props.name}</p>
-            </Col>
-            <Col span={13}>
-            </Col>
-            <Col span={2} style={{height:"73px"}}>
-                <Switch  checkedChildren="创作" unCheckedChildren="浏览" checked={mainPageState.page === 'Creator'} onChange={()=>{props.stateChangeFunction(false);}}/>
-            </Col>
-            <Col span={1.25}>
-                <App role={props.role} submit={props.promptToDesigner} />
-            </Col>
-            <Col span={1.25} onClick={LoginOut}>
-                <Row style={{height:"3px", paddingLeft:"16px"}} align={"middle"}>
-                    <FontAwesomeIcon icon={ faRunning} size={"2x"} />
-                </Row>
-                <Row style={{height:"38px"}} align={"middle"}>
-                    退出登录
-                </Row>
-            </Col>
-        </Row>
+        <div className="Navbar"> 123 </div>
+        // <Row justify="space-around" align={"middle"}>
+        //     <Col span={4} style={{height:"73px"}} >
+        //         <p >欢迎，{props.name}</p>
+        //     </Col>
+        //     <Col span={13}>
+        //     </Col>
+        //     <Col span={2} style={{height:"73px"}}>
+        //         <Switch  checkedChildren="创作" unCheckedChildren="浏览" checked={mainPageState.page === 'Creator'} onChange={()=>{props.stateChangeFunction(false);}}/>
+        //     </Col>
+        //     <Col span={1.25}>
+        //         <App role={props.role} submit={props.promptToDesigner} />
+        //     </Col>
+        //     <Col span={1.25} onClick={LoginOut}>
+        //         <Row style={{height:"3px", paddingLeft:"16px"}} align={"middle"}>
+        //             <FontAwesomeIcon icon={ faRunning} size={"2x"} />
+        //         </Row>
+        //         <Row style={{height:"38px"}} align={"middle"}>
+        //             退出登录
+        //         </Row>
+        //     </Col>
+        // </Row>
     );
 }
 
