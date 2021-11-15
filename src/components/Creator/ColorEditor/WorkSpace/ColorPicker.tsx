@@ -1,16 +1,15 @@
-
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "../../../../styles/ColorEditor.css";
 
 import ColorSlider from "./ColorSlider";
-import { HSV2RGB, RGB2HSV } from "../../../../utils/Color";
+import {HSV2RGB, RGB2HSV} from "../../../../utils/Color";
 
 import "rc-slider/assets/index.css";
 
-import { Button, Input } from "antd";
+import {Button, Input, Mentions} from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { useDispatch, useSelector } from "react-redux";
-import { getPickerState, updatePickerState } from "../../../../store";
+import {useDispatch, useSelector} from "react-redux";
+import {getPickerState, updatePickerState} from "../../../../store";
 
 
 interface ColorPickerProps {
@@ -54,13 +53,15 @@ const ColorPicker = (props: ColorPickerProps) => {
           colorArrayAfter[2],
         ];
 
-        dispatch(updatePickerState(newColorArray))
+        dispatch(updatePickerState(newColorArray));
         props.colorOnChange(newColorArray);
+
+
     };
 
     useEffect(()=>{
-      dispatch(updatePickerState(props.initColor));
-    }, []);
+        dispatch(updatePickerState(props.initColor));
+    }, [])
 
 
   return (
@@ -137,9 +138,11 @@ const ColorPicker = (props: ColorPickerProps) => {
                       min={0}
                       max={360}
                   />
+                  <div className="input">
+                      <Mentions style={{width: '60%'}} value={"#" + colorPickerState[0].toString(16) + colorPickerState[1].toString(16) + colorPickerState[2].toString(16)} readOnly/>
+                  </div>
               </div>
           </div>
-
       </div>
       <div className="inputFrame">
         <p className="fontSize">

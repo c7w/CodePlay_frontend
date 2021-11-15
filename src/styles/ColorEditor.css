@@ -48,6 +48,10 @@
     align-items: center;
 }
 
+.colorBlock {
+    width: 300px;
+}
+
 .colorArea {
     display: flex;
     flex-direction: column;
@@ -80,7 +84,14 @@
     width: 600px;
     padding-left: 20px;
     padding-bottom: 20px;
+    display: flex;
+    flex-direction: row;
     background-color: white;
+}
+
+.input {
+    padding-top: 35px;
+
 }
 
 .down {
