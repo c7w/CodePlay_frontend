@@ -139,7 +139,7 @@ const ColorPicker = (props: ColorPickerProps) => {
                       max={360}
                   />
                   <div className="colorHex">
-                      <b>16 进制 R G B：</b>
+                      <b>Hex Value ：</b>
                   </div>
                   <div className="input">
                       <Mentions style={{width: '60%'}} value={"#" + colorPickerState[0].toString(16) + colorPickerState[1].toString(16) + colorPickerState[2].toString(16)} readOnly/>
