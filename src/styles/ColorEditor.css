@@ -66,21 +66,18 @@
     width: 300px;
     padding-left: 20px;
     padding-top: 20px;
-    background-color: white;
 }
 
 .RightColor {
     width: 300px;
     padding-right: 20px;
     padding-top: 20px;
-    background-color: white;
 }
 
 .bottomColor {
     width: 600px;
     padding-left: 20px;
     padding-bottom: 20px;
-    background-color: white;
 }
 
 .down {

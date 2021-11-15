@@ -1,26 +1,39 @@
 .scheme {
     width: 170px;
-    height:600px;
+    height:300px;
     position:fixed;
     right:0;
     top:100px;
-    background: rgba(122, 197, 216, 0.2);
+    background: rgba(200,200,200, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 32;
+}
+.scheme2 {
+    width: 170px;
+    height:300px;
+    position:fixed;
+    left:0;
+    top:100px;
+    background: rgba(200,200,200, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     z-index: 32;
 }
 
 .selected {
-    background-color: rgba(122, 197, 216, 0.2);
+    background-color: rgba(122, 197, 216, 0);
     padding: 5%;
     width: 100%;
     height: 50%;
 }
 
 .popularity {
-    background: rgba(180, 159, 218, 0.2);
+    background: rgba(180, 159, 218, 0.0);
     padding: 5%;
     width: 100%;
     height: 50%;
