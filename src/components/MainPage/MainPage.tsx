@@ -206,12 +206,16 @@ const MainPage = () => {
                 <div className="selected">
                     <span><b>精选方案</b></span>
                     <ApprovedList explore={exploreOperation}/>
-                </div>
+                 </div>
+            </div>
+
+            <div className="scheme2">
                 <div className="popularity">
                     <span><b>人气方案</b></span>
                     <MostLikedList explore={exploreOperation}/>
                 </div>
             </div>
+
             <Navbar
               name={mainPageState.userInfo.name}
               role={mainPageState.userInfo.role}

@@ -8,7 +8,7 @@
 .navBar {
     font-size: 20px;
     height: 50px;
-    background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
+    background-image: linear-gradient(to right, #F0E8E8 0%, #E8E8E8 19%, #E8E8FF 42%, #F0E8F0 69%, #E8E8FF 100%);
     position: sticky;
     display: flex;
     flex-direction: row;
