@@ -1,6 +1,6 @@
 
 import { Button, Layout, message, Row } from "antd";
-import { Content } from "antd/lib/layout/layout";
+import { Content, Footer } from "antd/lib/layout/layout";
 import Modal from "antd/lib/modal/Modal";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,9 @@ import HistoryList from "../HistoryList/HistoryList";
 import Navbar from "../Navbar/Navbar";
 import "../../styles/MainPage.css"
 import { ApprovedList, MostLikedList } from "../Sidebar/Sidebar";
+import { Typography, Space } from 'antd';
+
+const { Text, Link } = Typography;
 
 
 var submittedIn30s = false;
@@ -154,7 +157,7 @@ const MainPage = () => {
 
     // The first time the page is rendered...
     useEffect(()=>{
-        console.debug("CodePlay Designed & Coded by c7w & his fellow. https://www.github.com/c7w/");
+        console.debug("CodePlay Developed & Maintained by c7w & his fellow. https://www.github.com/c7w/");
         fetch(WEB_URL + "/api/userinfo?sessionId=" + getSessionId(),).then(resp =>resp.json()).then(
             json=>{
                 
@@ -262,6 +265,10 @@ const MainPage = () => {
                     </div> */}
                 </Content>
             </Layout>
+            <Footer style={{textAlign: 'center' }}>
+                <Text><span style={{fontWeight: 'bold'}}>CodePlay9</span> Developed & Maintained By <Link href="https://www.github.com/c7w/" target="_blank">c7w</Link> & his fellow.</Text> <br/>
+                <Text><span style={{fontWeight: 'bold'}}>© SAST 2021</span> | 京ICP备abcdefgh号-j</Text>
+            </Footer>
         </main>
     );
 };

@@ -123,4 +123,14 @@ function getSketch():Promise<string>{
     return result
 }
 
-export { promptToDesigner, getUserScheme, changeUserScheme, getExploreScheme, getSketch, getSessionId };
+const getRandomName = ():any => {
+    let url=WEB_URL+"/api/randomName"
+    let result=fetch(url).then(
+        resp=>{
+            return resp.json()
+        }
+    ).catch(()=>{message.error("网络开小差啦~"); return {"name": ""};})
+    return result
+};
+
+export { promptToDesigner, getUserScheme, changeUserScheme, getExploreScheme, getSketch, getSessionId, getRandomName };

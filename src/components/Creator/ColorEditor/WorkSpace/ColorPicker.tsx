@@ -6,10 +6,13 @@ import {HSV2RGB, RGB2HSV} from "../../../../utils/Color";
 
 import "rc-slider/assets/index.css";
 
-import {Button, Input, Mentions} from "antd";
+import {ReloadOutlined} from "@ant-design/icons"
+
+import {Button, Input, Mentions, Tooltip} from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import {useDispatch, useSelector} from "react-redux";
 import {getPickerState, updatePickerState} from "../../../../store";
+import { getRandomName } from "../../../../utils/Network";
 
 
 interface ColorPickerProps {
@@ -139,17 +142,20 @@ const ColorPicker = (props: ColorPickerProps) => {
                       max={360}
                   />
                   <div className="colorHex">
-                      <b>Hex Value ：</b>
+                      <b>HexValue ：</b>
                   </div>
                   <div className="input">
-                      <Mentions style={{width: '60%'}} value={"#" + colorPickerState[0].toString(16) + colorPickerState[1].toString(16) + colorPickerState[2].toString(16)} readOnly/>
+                      <Mentions style={{width: '60%'}} value={"#" + colorPickerState[0].toString(16).padStart(2, "0") + colorPickerState[1].toString(16).padStart(2, "0") + colorPickerState[2].toString(16).padStart(2, "0")} readOnly/>
                   </div>
               </div>
           </div>
       </div>
       <div className="inputFrame">
-        <p className="fontSize">
-          <b>配色方案名称 :</b>
+        <p className="fontSize" style={{userSelect: 'none'}}>
+          <b>配色方案名称 :</b> &nbsp;&nbsp;&nbsp;&nbsp; 
+            <Tooltip title="起名困难？点我生成！" color="#2db7f5" arrowPointAtCenter>
+              <ReloadOutlined onClick={()=>{getRandomName().then((resp:any) => {setName(resp.name)})}} />
+            </Tooltip>
         </p>
         <Input
           placeholder="Please input the name of your scheme ~ "
